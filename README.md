@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 세라복.모에 커모지 신청 페이지
 
-## Getting Started
+안녕! 츠키노시타 학원의 학생회장 **요즈미나**라고 해!
+여기는 연합우주의 서버 [세라복.모에](https://serafuku.moe)에서 사용하는 커스텀 에모지(이하 커모지)를 신청하는 페이지를 만드는 곳이야.
 
-First, run the development server:
+여기에 와줬다는 건 우리 학생회가 하는 일에 관심이 있어서라고 믿을게. 고마워!
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+우선 이 사이트를 만들게 된 배경은 이런데,
+우리 세라복.모에가 아늑한 서버인 건 맞지만, 조금 더 학생이 늘었으면 했어. 그래서 '왜 학생이 늘지 않을까?'에 대해 곰곰히 생각해보다가, 우리가 사용할 수 있는 커모지의 종류가 그렇게 많지 않은 걸 깨달았어. 미스키는 리액션을 커모지로 달 수 있잖아? 그런데 표현할 수 있는 커모지의 종류가 많지 않으면 서버로써 매력이 조금 반감된다는 결론에 도달해서, 학생회에서 직접 추가하는 것도 있지만 사이트로 학생들이 쓰고 싶은 커모지를 추가하고, 학생회에서 검토 후에 반영할 수 있게 하면 어떨까? 라는 생각에 이 페이지를 만들게 된거야.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+헤헤... 학교에 학생이 없다는 말을 직접하려니 조금 쑥스럽네. 여튼! 우리 커모지 신청 페이지의 스택은 이래.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next.js 15.3 (App Router)
+- tailwindcss
+- Tanstack Query
+- Postgresql
+- Zustand
+- Amazon S3
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+여기에 쓰인 스택들은 언제든 변동이 있을 수 있으니까, 이 점 양해해줬으면 좋겠어.
+미스키에서 지원하는 API를 사용해서 궁극적으로는 우리 사이트에서 커모지 신청부터 반려, 등록, 관리까지 원스톱으로 할 수 있도록 하는 거야. 그러니까 완성까지 지켜봐줘!
 
-## Learn More
+이걸 작성하는 오늘은 2025년 8월 27일 20시 37분이야. 얼마만에 디플로이까지 갈 수 있는지 한 번 보자구!
 
-To learn more about Next.js, take a look at the following resources:
+완성되면 우선 세라복.모에 내부에서 사용하고 학생들의 의견을 취합한 다음에 수정을 가한 뒤에, 반응도 좋고 요청이 있다면 셀프-호스트 패키징까지 할 의향도 있어.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+앗, 벌써 시간이 이렇게 됐네. 그럼 앞으로도 츠키노시타와 세라복.모에에 많은 관심 부탁해!
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+잘 가!
