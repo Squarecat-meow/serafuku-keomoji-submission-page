@@ -1,12 +1,28 @@
 "use client";
 
 import { IUser } from "@/types/auth/authType";
-import { PlusIcon, UserPlus } from "lucide-react";
+import { Loader2Icon, PlusIcon, UserPlus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function NavBar() {
-  const user: IUser | string = JSON.parse(localStorage.getItem("user") ?? "");
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<IUser | null>(null);
+
+  useEffect(() => {
+    try {
+      setLoading(true);
+      const stringUser = localStorage.getItem("user");
+      if (!stringUser) throw new Error("유저정보가 로컬스토리지에 없습니다!");
+      const user = JSON.parse(stringUser);
+      setUser(user);
+    } catch (err) {
+      if (err instanceof Error) console.error(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
   return (
     <div className="navbar bg-base-100 rounded-2xl px-4 shadow">
       <div className="navbar-start">
@@ -32,7 +48,7 @@ export default function NavBar() {
           tabIndex={0}
           role="button"
         >
-          {typeof user !== "string" && (
+          {!loading && user ? (
             <div className="flex gap-2">
               <div className="text-right">
                 <span>{user.name}</span>
@@ -44,6 +60,8 @@ export default function NavBar() {
                 className="h-9 aspect-square rounded-full"
               />
             </div>
+          ) : (
+            <Loader2Icon className="animate-spin" />
           )}
         </div>
         <ul
