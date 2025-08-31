@@ -1,6 +1,6 @@
 "use client";
 
-import { IUser } from "@/types/auth/authTypes";
+import { IUser } from "@/types/auth/authType";
 import { PlusIcon, UserPlus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,22 +18,32 @@ export default function NavBar() {
       </div>
       <div className="navbar-center">
         <button className="btn btn-ghost text-lg text-base-content">
-          <PlusIcon className="w-4" />
+          <PlusIcon className="w-4 stroke-gray-500" />
           <Link href={"/submission"}>커모지 신청</Link>
         </button>
         <button className="btn btn-ghost text-lg text-base-content">
-          <UserPlus className="w-4" />
+          <UserPlus className="w-4 stroke-gray-500" />
           <Link href={"/my-submission"}>내가 신청한 커모지</Link>
         </button>
       </div>
       <div className="navbar-end dropdown relative">
-        <div className="btn btn-circle" tabIndex={0} role="button">
+        <div
+          className="btn btn-ghost px-2 font-light"
+          tabIndex={0}
+          role="button"
+        >
           {typeof user !== "string" && (
-            <img
-              src={user.avatarUrl}
-              alt={`${user.username}의 프로필사진`}
-              className="h-10 aspect-square rounded-full"
-            />
+            <div className="flex gap-2">
+              <div className="text-right">
+                <span>{user.name}</span>
+                <p className="text-xs">{user.username}@serafuku.moe</p>
+              </div>
+              <img
+                src={user.avatarUrl}
+                alt={`${user.username}의 프로필사진`}
+                className="h-9 aspect-square rounded-full"
+              />
+            </div>
           )}
         </div>
         <ul
