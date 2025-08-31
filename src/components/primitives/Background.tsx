@@ -9,7 +9,6 @@ export default function Background() {
         src={backgroundsInfo[randomNumber].src}
         alt="배경"
         fill
-        objectFit="cover"
         className="-z-[1] opacity-70 blur pointer-events-none"
       />
       <span className="absolute bottom-2 right-2 text-xs text-slate-700 dark:text-slate-200">

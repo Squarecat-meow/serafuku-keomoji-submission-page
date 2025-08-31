@@ -1,11 +1,10 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import SerafukuIcon from '@/public/images/serafuku.png';
-import MisskeyIcon from '@/public/icons/Misskey.svg';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { misskeyAuthPhaseOne } from '@/actions/auth/misskeyAuthPhaseOne';
+import Image from "next/image";
+import MisskeyIcon from "/public/icons/Misskey.svg";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { misskeyAuthPhaseOne } from "@/actions/auth/misskeyAuthPhaseOne";
 
 export default function Home() {
   const router = useRouter();
@@ -28,10 +27,10 @@ export default function Home() {
           <p>
             미스키
             <MisskeyIcon className="w-5 h-5 inline-flex fill-green-600 mx-1" />
-            인스턴스{' '}
+            인스턴스{" "}
             <Link
-              href={'https://serafuku.moe'}
-              className="text-sky-500 underline"
+              href={"https://serafuku.moe"}
+              className="text-sky-600 dark:text-sky-400 underline"
             >
               세라복.모에
             </Link>
@@ -39,9 +38,12 @@ export default function Home() {
             세라복.모에 계정으로만 로그인할 수 있으며, <br />
             신청 후에는 학생회가 검토한 후, 승인 결과를 DM으로 알려드립니다.
           </p>
-          <button className="btn btn-xl bg-sky-500" onClick={handleLoginClick}>
+          <button
+            className="btn btn-xl border-0 bg-sky-500 shadow"
+            onClick={handleLoginClick}
+          >
             <Image
-              src={SerafukuIcon}
+              src={"/images/serafuku.png"}
               alt="세라복.모에 아이콘"
               width={24}
               height={24}
