@@ -19,3 +19,13 @@ model server {
   serverName String @unique
   appSecret  String
 }
+
+model submission {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  aliases     String[]
+  imageUrl    String
+  licenses    String?
+  isSensitive Boolean  @default(false)
+  isLocal     Boolean  @default(false)
+}
