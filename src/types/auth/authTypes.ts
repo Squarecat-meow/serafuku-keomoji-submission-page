@@ -10,3 +10,13 @@ export interface ITokenAndAuthUrl {
   token: string;
   url: string;
 }
+
+export interface IUser {
+  name: string;
+  username: string;
+  host: string;
+  avatarUrl: string;
+  roles: {
+    id: string;
+  }[];
+}
