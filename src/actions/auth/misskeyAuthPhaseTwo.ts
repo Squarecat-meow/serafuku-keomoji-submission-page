@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prismaClient";
-import { IUser } from "@/types/auth/authTypes";
+import { IUser } from "@/types/auth/authType";
 import ky from "ky";
 import { cookies } from "next/headers";
 
