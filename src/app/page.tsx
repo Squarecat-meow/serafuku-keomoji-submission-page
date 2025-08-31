@@ -20,9 +20,10 @@ export default function Home() {
   return (
     <main className="hero min-h-screen">
       <section className="hero-content text-center">
-        <article className="space-y-8 break-keep">
+        <article className="space-y-6 break-keep">
           <h1 className="text-6xl font-bold">
-            세라복.모에 커스텀 에모지 신청 페이지
+            세라복.모에 <span className="font-black">커스텀 에모지</span> 신청
+            페이지
           </h1>
           <p>
             미스키
