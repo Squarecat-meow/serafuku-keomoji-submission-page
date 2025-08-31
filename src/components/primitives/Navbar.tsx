@@ -1,0 +1,50 @@
+"use client";
+
+import { IUser } from "@/types/auth/authTypes";
+import { PlusIcon, UserPlus } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+
+export default function NavBar() {
+  const user: IUser | string = JSON.parse(localStorage.getItem("user") ?? "");
+  return (
+    <div className="navbar bg-base-100 rounded-2xl px-4 shadow">
+      <div className="navbar-start">
+        <button className="btn btn-link h-8 relative p-2 aspect-square">
+          <Link href={"/main"}>
+            <Image src={"/images/serafuku.png"} alt="세라복.모에 로고" fill />
+          </Link>
+        </button>
+      </div>
+      <div className="navbar-center">
+        <button className="btn btn-ghost text-lg text-base-content">
+          <PlusIcon className="w-4" />
+          <Link href={"/submission"}>커모지 신청</Link>
+        </button>
+        <button className="btn btn-ghost text-lg text-base-content">
+          <UserPlus className="w-4" />
+          <Link href={"/my-submission"}>내가 신청한 커모지</Link>
+        </button>
+      </div>
+      <div className="navbar-end dropdown relative">
+        <div className="btn btn-circle" tabIndex={0} role="button">
+          {typeof user !== "string" && (
+            <img
+              src={user.avatarUrl}
+              alt={`${user.username}의 프로필사진`}
+              className="h-10 aspect-square rounded-full"
+            />
+          )}
+        </div>
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu top-12 bg-base-100 rounded-box z-[1] w-52 p-2 shadow-lg"
+        >
+          <li>
+            <a className="hover:bg-red-400">로그아웃</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+}
