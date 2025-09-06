@@ -14,6 +14,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum status {
+  PENDING
+  REJECT
+  ACCEPTED
+}
+
 model server {
   id         Int    @id @default(autoincrement())
   serverName String @unique
@@ -28,4 +34,6 @@ model submission {
   licenses    String?
   isSensitive Boolean  @default(false)
   isLocal     Boolean  @default(false)
+
+  status status
 }
