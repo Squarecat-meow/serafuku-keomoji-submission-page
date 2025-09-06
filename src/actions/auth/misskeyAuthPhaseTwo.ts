@@ -37,6 +37,6 @@ export async function misskeyAuthPhaseTwo(token: string) {
 
     return accessInfo.user;
   } catch (err) {
-    if (err instanceof Error) console.error(err.message);
+    throw err;
   }
 }
