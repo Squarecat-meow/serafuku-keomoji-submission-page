@@ -16,6 +16,7 @@ export interface IUser {
   username: string;
   host: string;
   avatarUrl: string;
+  bannerUrl: string;
   roles: {
     id: string;
   }[];

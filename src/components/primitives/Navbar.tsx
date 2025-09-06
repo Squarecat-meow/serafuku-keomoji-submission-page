@@ -1,30 +1,17 @@
 "use client";
 
-import { IUser } from "@/types/auth/authType";
 import { Loader2Icon, PlusIcon, UserPlus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import ProfileButton from "./ProfileButton";
+import { useQuery } from "@tanstack/react-query";
+import { userQueries } from "@/queries/userQueries";
 
-export default function NavBar() {
-  const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<IUser | null>(null);
+export default function NavBar({ token }: { token: string }) {
+  const { data: user, isPending } = useQuery(userQueries.userOptions(token));
 
-  useEffect(() => {
-    try {
-      setLoading(true);
-      const stringUser = localStorage.getItem("user");
-      if (!stringUser) throw new Error("유저정보가 로컬스토리지에 없습니다!");
-      const user = JSON.parse(stringUser);
-      setUser(user);
-    } catch (err) {
-      if (err instanceof Error) console.error(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
   return (
-    <div className="navbar bg-base-200 rounded-2xl px-4 shadow">
+    <div className="navbar px-4 relative bg-base-200 rounded-2xl shadow">
       <div className="navbar-start">
         <button className="btn btn-link h-8 relative p-2 aspect-square">
           <Link href={"/main"}>
@@ -42,37 +29,19 @@ export default function NavBar() {
           <Link href={"/my-submission"}>내가 신청한 커모지</Link>
         </button>
       </div>
-      <div className="navbar-end dropdown relative">
-        <div
-          className="btn btn-ghost px-2 font-light"
-          tabIndex={0}
-          role="button"
-        >
-          {!loading && user ? (
-            <div className="flex gap-2">
-              <div className="text-right">
-                <span>{user.name}</span>
-                <p className="text-xs">{user.username}@serafuku.moe</p>
-              </div>
-              <img
-                src={user.avatarUrl}
-                alt={`${user.username}의 프로필사진`}
-                className="h-9 aspect-square rounded-full"
-              />
-            </div>
-          ) : (
-            <Loader2Icon className="animate-spin" />
-          )}
-        </div>
-        <ul
-          tabIndex={0}
-          className="dropdown-content menu top-12 bg-base-200 rounded-box z-[1] w-52 p-2 shadow-lg"
-        >
-          <li>
-            <a className="hover:bg-red-400">로그아웃</a>
-          </li>
-        </ul>
-      </div>
+      {user && !isPending ? (
+        <>
+          <img
+            src={user.bannerUrl}
+            alt={`${user.username}의 헤더`}
+            className="absolute right-0 object-cover h-full rounded-r-2xl aspect-[3/1]"
+          />
+          <div className="absolute right-0 h-full aspect-[3/1] bg-gradient-to-r from-base-100 to-transparent" />
+          <ProfileButton user={user} />
+        </>
+      ) : (
+        <Loader2Icon className="animate-spin" />
+      )}
     </div>
   );
 }
