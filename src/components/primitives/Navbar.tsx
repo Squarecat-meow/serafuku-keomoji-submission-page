@@ -20,23 +20,33 @@ export default function NavBar({ token }: { token: string }) {
         </button>
       </div>
       <div className="navbar-center">
-        <button className="btn btn-ghost text-xl text-base-content">
-          <PlusIcon className="w-4 stroke-gray-500" />
-          <Link href={"/submission"}>커모지 신청</Link>
-        </button>
-        <button className="btn btn-ghost text-xl text-base-content">
-          <UserPlus className="w-4 stroke-gray-500" />
-          <Link href={"/my-submission"}>내가 신청한 커모지</Link>
-        </button>
+        <Link href={"/submission"}>
+          <button className="btn btn-ghost text-xl text-base-content">
+            <PlusIcon className="w-5 mr-1 stroke-gray-500" />
+            <span className="hidden sm:inline-block">커모지 신청</span>
+          </button>
+        </Link>
+        <Link href={"/my-submission"}>
+          <button className="btn btn-ghost text-xl text-base-content">
+            <UserPlus className="w-5 mr-1 stroke-gray-500" />
+            <span className="hidden sm:inline-block">내가 신청한 커모지</span>
+          </button>
+        </Link>
       </div>
       {user && !isPending ? (
         <>
-          <img
-            src={user.bannerUrl}
-            alt={`${user.username}의 헤더`}
-            className="absolute right-0 object-cover h-full rounded-r-2xl aspect-[3/1]"
-          />
-          <div className="absolute right-0 h-full aspect-[3/1] bg-gradient-to-r from-base-100 to-transparent" />
+          {user.bannerUrl ? (
+            <>
+              <img
+                src={user.bannerUrl}
+                alt={`${user.username}의 헤더`}
+                className="absolute right-0 object-cover h-full rounded-r-2xl w-1/6"
+              />
+              <div className="absolute right-0 w-1/6 h-full bg-gradient-to-r from-base-200 to-transparent" />
+            </>
+          ) : (
+            <div />
+          )}
           <ProfileButton user={user} />
         </>
       ) : (

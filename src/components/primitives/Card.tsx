@@ -23,7 +23,7 @@ export default function Card({ status, children, submission }: ICard) {
   return (
     <div className="w-full flex flex-col bg-base-100 p-4 rounded-xl">
       <div className="flex justify-between items-center">
-        <h1 className="text-xl font-bold">{children}</h1>
+        <h1 className="text-xl font-bold break-keep">{children}</h1>
         <Badge>{statusIcons[status]}</Badge>
       </div>
       <div>
