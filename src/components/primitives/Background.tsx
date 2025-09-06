@@ -1,5 +1,5 @@
-import { backgroundsInfo } from '@/lib/backgroundInfo';
-import Image from 'next/image';
+import { backgroundsInfo } from "@/lib/backgroundInfo";
+import Image from "next/image";
 
 export default function Background() {
   const randomNumber = Math.floor(Math.random() * 3);
@@ -9,10 +9,10 @@ export default function Background() {
         src={backgroundsInfo[randomNumber].src}
         alt="배경"
         fill
-        className="-z-[1] opacity-70 blur pointer-events-none"
+        className="-z-[1] opacity-70 blur pointer-events-none object-cover"
       />
       <span className="absolute bottom-2 right-2 text-xs text-slate-700 dark:text-slate-200">
-        사진:{' '}
+        사진:{" "}
         <a
           href={backgroundsInfo[randomNumber].unsplash}
           className="underline"
@@ -21,7 +21,7 @@ export default function Background() {
         >
           Unsplash
         </a>
-        의{' '}
+        의{" "}
         <a
           href={backgroundsInfo[randomNumber].authorLink}
           className="underline"

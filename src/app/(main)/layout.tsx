@@ -5,9 +5,9 @@ export default function Layout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <section className="w-screen p-4">
-      <section className="w-full md:w-3/4 m-auto">
+      <section className="w-full lg:w-3/4 m-auto">
         <NavBar />
-        <article className="my-4 p-4 bg-base-100 text-base-content rounded-2xl shadow">
+        <article className="my-4 p-4 bg-base-200 text-base-content rounded-2xl shadow">
           {children}
         </article>
       </section>

@@ -24,7 +24,7 @@ export default function NavBar() {
     }
   }, []);
   return (
-    <div className="navbar bg-base-100 rounded-2xl px-4 shadow">
+    <div className="navbar bg-base-200 rounded-2xl px-4 shadow">
       <div className="navbar-start">
         <button className="btn btn-link h-8 relative p-2 aspect-square">
           <Link href={"/main"}>
@@ -33,11 +33,11 @@ export default function NavBar() {
         </button>
       </div>
       <div className="navbar-center">
-        <button className="btn btn-ghost text-lg text-base-content">
+        <button className="btn btn-ghost text-xl text-base-content">
           <PlusIcon className="w-4 stroke-gray-500" />
           <Link href={"/submission"}>커모지 신청</Link>
         </button>
-        <button className="btn btn-ghost text-lg text-base-content">
+        <button className="btn btn-ghost text-xl text-base-content">
           <UserPlus className="w-4 stroke-gray-500" />
           <Link href={"/my-submission"}>내가 신청한 커모지</Link>
         </button>
@@ -66,7 +66,7 @@ export default function NavBar() {
         </div>
         <ul
           tabIndex={0}
-          className="dropdown-content menu top-12 bg-base-100 rounded-box z-[1] w-52 p-2 shadow-lg"
+          className="dropdown-content menu top-12 bg-base-200 rounded-box z-[1] w-52 p-2 shadow-lg"
         >
           <li>
             <a className="hover:bg-red-400">로그아웃</a>
