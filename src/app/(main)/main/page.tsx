@@ -1,7 +1,11 @@
-export default function Page() {
+import { prisma } from "@/lib/prismaClient";
+import StatusCardArray from "./_components/StatusCardArray";
+
+export default async function Page() {
+  const submissionStatus = await prisma.submission.findMany();
   return (
-    <div>
-      <span>므아</span>
-    </div>
+    <>
+      <StatusCardArray submission={submissionStatus} />
+    </>
   );
 }
