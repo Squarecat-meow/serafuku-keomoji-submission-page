@@ -8,8 +8,10 @@ export default function ProfileButton({ user }: { user: IUser }) {
       <div className="btn btn-ghost px-2 font-light" tabIndex={0} role="button">
         <div className="flex gap-2">
           <div className="text-right">
-            <span className="hidden lg:block font-bold">{user.name}</span>
-            <p className="hidden lg:block text-xs">
+            <span className="hidden lg:block font-bold text-shadow-sm">
+              {user.name}
+            </span>
+            <p className="hidden lg:block text-xs text-shadow-sm">
               {user.username}@serafuku.moe
             </p>
           </div>

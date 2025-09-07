@@ -7,10 +7,10 @@ export default async function Layout({
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value ?? "";
   return (
-    <section className="w-screen p-4">
-      <section className="w-full lg:w-3/4 m-auto">
+    <section className="w-screen h-screen p-4">
+      <section className="w-full h-full flex flex-col lg:w-3/4 m-auto">
         <NavBar token={accessToken} />
-        <article className="my-4 p-4 bg-base-200 text-base-content space-y-2 rounded-2xl shadow">
+        <article className="my-4 p-4 flex-1 bg-base-200/80 backdrop-blur-lg text-base-content space-y-2 rounded-2xl shadow">
           {children}
         </article>
       </section>

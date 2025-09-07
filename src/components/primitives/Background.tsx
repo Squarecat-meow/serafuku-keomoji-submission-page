@@ -8,8 +8,9 @@ export default function Background() {
       <Image
         src={backgroundsInfo[randomNumber].src}
         alt="배경"
+        quality={75}
         fill
-        className="-z-[2] opacity-70 blur pointer-events-none object-cover"
+        className="-z-[2] opacity-70 pointer-events-none object-cover"
       />
       <span className="absolute bottom-2 right-2 text-xs text-slate-700 dark:text-slate-200">
         사진:{" "}
