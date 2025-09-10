@@ -6,6 +6,9 @@ import { useQuery } from "@tanstack/react-query";
 import { KeyboardEvent, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import KeomojiImageArray from "./KeomojiImageArray";
+import ky from "ky";
+import { useRouter } from "next/navigation";
+import KeomojiSubmissionConfirmModal from "./KeomojiSubmissionConfirmModal";
 
 interface IKeomojiForm {
   aliases: string;
@@ -31,11 +34,14 @@ export default function KeomojiForm({
     handleSubmit,
     getValues,
     resetField,
+    trigger,
     formState: { errors },
   } = useForm<IKeomojiForm>({
     mode: "onChange",
   });
+  const router = useRouter();
   const [tags, setTags] = useState<{ name: string; id: number }[]>([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const { data: categories } = useQuery(misskeyQueries.categoriesOption());
 
   const handleKeydown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -50,8 +56,14 @@ export default function KeomojiForm({
   const handleDelete = (id: number) => {
     setTags((state) => state.filter((el) => el.id !== id));
   };
-  const onSubmit = (e: IKeomojiForm) => {
-    console.log({ ...e, aliases: tags });
+  const handleConfirmButtonClick = async () => {
+    const validateResult = await trigger();
+    if (validateResult) setIsModalVisible(true);
+  };
+  const onSubmit = async (e: IKeomojiForm) => {
+    ky.post("/api/keomojis/submit", {
+      json: { ...e, aliases: tags },
+    }).then(() => router.push("/"));
   };
   return (
     <div className="w-full lg:max-w-3xl flex flex-col gap-4">
@@ -182,9 +194,20 @@ export default function KeomojiForm({
           >
             취소
           </button>
-          <button className="btn btn-accent">확인</button>
+          <button
+            className="btn btn-accent"
+            type="button"
+            onClick={handleConfirmButtonClick}
+          >
+            확인
+          </button>
         </div>
       </form>
+      <KeomojiSubmissionConfirmModal
+        isVisible={isModalVisible}
+        setIsVisible={setIsModalVisible}
+        callback={handleSubmit(onSubmit)}
+      />
     </div>
   );
 }
