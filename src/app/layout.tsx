@@ -16,10 +16,8 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="font-sans">
-        <AppProvider>
-          {children}
-          <Background />
-        </AppProvider>
+        <Background />
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   );

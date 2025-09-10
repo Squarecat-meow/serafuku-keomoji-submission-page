@@ -21,7 +21,7 @@ export default function Card({ status, children, submission }: ICard) {
     (el) => el.status === status.toString(),
   );
   return (
-    <div className="w-full flex flex-col bg-base-100 p-4 rounded-xl">
+    <article className="w-full flex flex-col bg-base-100 p-4 rounded-xl">
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-bold break-keep">{children}</h1>
         <Badge>{statusIcons[status]}</Badge>
@@ -29,6 +29,6 @@ export default function Card({ status, children, submission }: ICard) {
       <div>
         <p>{submissionStatusQuantity.length}</p>
       </div>
-    </div>
+    </article>
   );
 }

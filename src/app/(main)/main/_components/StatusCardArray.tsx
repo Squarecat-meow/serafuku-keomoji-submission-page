@@ -7,7 +7,7 @@ export default function StatusCardArray({
   submission: submission[];
 }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <Card submission={submission} status="Total">
         총 신청 커모지
       </Card>
@@ -20,6 +20,6 @@ export default function StatusCardArray({
       <Card submission={submission} status="Accepted">
         승인된 커모지
       </Card>
-    </div>
+    </section>
   );
 }

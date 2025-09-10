@@ -11,7 +11,7 @@ export default function NavBar({ token }: { token: string }) {
   const { data: user, isPending } = useQuery(userQueries.userOptions(token));
 
   return (
-    <div className="navbar px-4 relative bg-base-200/80 backdrop-blur-lg rounded-2xl shadow">
+    <nav className="navbar px-4 relative bg-base-200/80 backdrop-blur-lg rounded-2xl shadow">
       <div className="navbar-start">
         <button className="btn btn-link h-8 relative p-2 aspect-square">
           <Link href={"/main"}>
@@ -49,6 +49,6 @@ export default function NavBar({ token }: { token: string }) {
       ) : (
         <Loader2Icon className="animate-spin" />
       )}
-    </div>
+    </nav>
   );
 }
