@@ -62,7 +62,7 @@ function ModalBody({
       onClick={() => setIsVisible(false)}
     >
       <motion.section
-        className={`w-full lg:w-2xl p-4 m-4 z-[3] bg-base-100 rounded-2xl shadow-lg ${className}`}
+        className={`w-fit p-4 m-4 z-[3] bg-base-100 rounded-2xl shadow-lg ${className}`}
         initial={{ scale: 1.1, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}

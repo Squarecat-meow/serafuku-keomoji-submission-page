@@ -14,23 +14,14 @@ export default function KeomojiSubmissionConfirmModal({
   return (
     <Modal.Root isVisible={isVisible} setIsVisible={setIsVisible}>
       <Modal.Body className="w-md space-y-4">
-        <h1 className="text-xl font-bold">확인</h1>
-        <p>이대로 커모지를 제출하시겠습니까?</p>
+        <h1 className="text-xl font-bold">성공</h1>
+        <p>커모지 제출이 성공했습니다!</p>
         <div className="space-x-4 text-right">
           <button
-            className="btn btn-outline"
+            className="btn btn-accent"
             onClick={() => setIsVisible(false)}
           >
             취소
-          </button>
-          <button
-            className="btn btn-accent"
-            onClick={() => {
-              callback();
-              setIsVisible(false);
-            }}
-          >
-            확인
           </button>
         </div>
       </Modal.Body>

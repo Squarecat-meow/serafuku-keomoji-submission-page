@@ -11,13 +11,12 @@ import { useRouter } from "next/navigation";
 import KeomojiSubmissionConfirmModal from "./KeomojiSubmissionConfirmModal";
 
 interface IKeomojiForm {
-  aliases: string;
+  aliases: string | null;
   name: string;
-  category: string | null;
+  category: string;
   license: string[] | null;
   isSensitive: boolean;
   localOnly: boolean;
-  roleIdsThatCanBeUsedThisEmojiAsReaction: string[];
 }
 
 export default function KeomojiForm({
@@ -46,12 +45,14 @@ export default function KeomojiForm({
 
   const handleKeydown = (e: KeyboardEvent<HTMLInputElement>) => {
     const inputValues = getValues("aliases");
+    if (!inputValues) return;
     if (e.key === "Enter" && inputValues.trim() !== "") {
       e.preventDefault();
       setTags((state) => [...state, { id: i.current, name: inputValues }]);
       resetField("aliases");
       i.current++;
     }
+    // TODO: 태그 3개까지만 만들기
   };
   const handleDelete = (id: number) => {
     setTags((state) => state.filter((el) => el.id !== id));
@@ -61,9 +62,21 @@ export default function KeomojiForm({
     if (validateResult) setIsModalVisible(true);
   };
   const onSubmit = async (e: IKeomojiForm) => {
-    ky.post("/api/keomojis/submit", {
-      json: { ...e, aliases: tags },
-    }).then(() => router.push("/"));
+    const data = new FormData();
+    for (const [k, v] of Object.entries(e)) {
+      data.append(k, v);
+    }
+    const imageFile = await fetch(imgUrl).then((res) => res.blob());
+    data.append("image", imageFile);
+
+    const asdf = await ky
+      .post("/api/keomojis/submit", {
+        body: data,
+      })
+      .json();
+    console.log(asdf);
+    // .then(() => router.push("/"))
+    // .catch((err) => console.error(err));
   };
   return (
     <div className="w-full lg:max-w-3xl flex flex-col gap-4">
@@ -93,7 +106,7 @@ export default function KeomojiForm({
             {...register("name", {
               required: "이름을 입력해주세요.",
               pattern: {
-                value: /^[a-zA-Z0-9_]*$/g,
+                value: /^[a-zA-Z0-9_]+$/g,
                 message: "이름은 알파벳, 숫자, -와_만 가능합니다.",
               },
             })}
@@ -187,11 +200,7 @@ export default function KeomojiForm({
           </label>
         </div>
         <div className="w-full flex gap-4 justify-end">
-          <button
-            className="btn hover:btn-warning"
-            onClick={onCancel}
-            type="button"
-          >
+          <button className="btn btn-outline" onClick={onCancel} type="button">
             취소
           </button>
           <button

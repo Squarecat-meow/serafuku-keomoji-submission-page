@@ -18,6 +18,7 @@ export default function RootLayout({
       <body className="font-sans">
         <Background />
         <AppProvider>{children}</AppProvider>
+        <div id="portal" />
       </body>
     </html>
   );
