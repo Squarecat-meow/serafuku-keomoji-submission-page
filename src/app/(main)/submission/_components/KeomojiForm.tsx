@@ -6,17 +6,18 @@ import { useQuery } from "@tanstack/react-query";
 import { KeyboardEvent, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import KeomojiImageArray from "./KeomojiImageArray";
-import ky from "ky";
-import { useRouter } from "next/navigation";
 import KeomojiSubmissionConfirmModal from "./KeomojiSubmissionConfirmModal";
+import { useGlobalModalStore } from "@/stores/modalStore";
+import { useShallow } from "zustand/shallow";
+import { api } from "@/services/apiClient";
 
 interface IKeomojiForm {
-  aliases: string | null;
+  aliases: string;
   name: string;
   category: string;
-  license: string[] | null;
+  licenses: string[] | null;
   isSensitive: boolean;
-  localOnly: boolean;
+  isLocal: boolean;
 }
 
 export default function KeomojiForm({
@@ -38,15 +39,22 @@ export default function KeomojiForm({
   } = useForm<IKeomojiForm>({
     mode: "onChange",
   });
-  const router = useRouter();
   const [tags, setTags] = useState<{ name: string; id: number }[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { data: categories } = useQuery(misskeyQueries.categoriesOption());
+  const { setIsGlobalModalVisible, setChildren, setModalType } =
+    useGlobalModalStore(
+      useShallow((state) => ({
+        setIsGlobalModalVisible: state.setIsModalVisible,
+        setChildren: state.setChildren,
+        setModalType: state.setModalType,
+      })),
+    );
 
   const handleKeydown = (e: KeyboardEvent<HTMLInputElement>) => {
-    const inputValues = getValues("aliases");
+    const inputValues = getValues("aliases") as unknown as string;
     if (!inputValues) return;
-    if (e.key === "Enter" && inputValues.trim() !== "") {
+    if (e.key === "Enter" && inputValues.length > 0) {
       e.preventDefault();
       setTags((state) => [...state, { id: i.current, name: inputValues }]);
       resetField("aliases");
@@ -66,17 +74,25 @@ export default function KeomojiForm({
     for (const [k, v] of Object.entries(e)) {
       data.append(k, v);
     }
+    if (data.has("aliases")) data.delete("aliases");
+    data.append("aliases", tags.map((el) => el.name).join(","));
     const imageFile = await fetch(imgUrl).then((res) => res.blob());
     data.append("image", imageFile);
 
-    const asdf = await ky
+    api
       .post("/api/keomojis/submit", {
         body: data,
       })
-      .json();
-    console.log(asdf);
-    // .then(() => router.push("/"))
-    // .catch((err) => console.error(err));
+      .then(() => {
+        setChildren("커모지 제출이 완료되었습니다. 조금만 기다려주세요!");
+        setIsGlobalModalVisible(true);
+        setModalType("info");
+      })
+      .catch((err) => {
+        setChildren(err.message);
+        setIsGlobalModalVisible(true);
+        setModalType("error");
+      });
   };
   return (
     <div className="w-full lg:max-w-3xl flex flex-col gap-4">
@@ -174,7 +190,7 @@ export default function KeomojiForm({
         <fieldset className="fieldset">
           <legend className="fieldset-legend">라이선스</legend>
           <input
-            {...register("license")}
+            {...register("licenses")}
             type="text"
             className="input w-full focus:outline-none"
             placeholder="여기에 라이선스명을 입력"
@@ -194,7 +210,7 @@ export default function KeomojiForm({
             <input
               type="checkbox"
               className="toggle toggle-primary"
-              {...register("localOnly")}
+              {...register("isLocal")}
             />
             로컬에만
           </label>
