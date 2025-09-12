@@ -53,10 +53,15 @@ function ModalBody({ className }: { className?: string }) {
   switch (modalType) {
     case "info":
       modalTypeRef.current = "확인";
+      break;
     case "warning":
       modalTypeRef.current = "경고";
+      break;
     case "error":
       modalTypeRef.current = "오류";
+      break;
+    default:
+      return null;
   }
 
   const handleInfoClick = () => {

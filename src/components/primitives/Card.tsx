@@ -10,7 +10,7 @@ interface ICard {
 
 export default function Card({ status, children, submission }: ICard) {
   const statusIcons = {
-    TOTAL: <FileUpIcon className="stroke-accent" />,
+    TOTAL: <FileUpIcon className="stroke-info" />,
     PENDING: <ClockIcon className="stroke-warning" />,
     REJECT: <XCircleIcon className="stroke-error" />,
     ACCEPTED: <CheckCircle className="stroke-success" />,
@@ -25,7 +25,11 @@ export default function Card({ status, children, submission }: ICard) {
         <Badge>{statusIcons[status]}</Badge>
       </div>
       <div>
-        <p>{submissionStatusQuantity.length}</p>
+        <p>
+          {status === "TOTAL"
+            ? submission.length
+            : submissionStatusQuantity.length}
+        </p>
       </div>
     </article>
   );

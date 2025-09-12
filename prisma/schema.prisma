@@ -26,6 +26,17 @@ model Server {
   appSecret  String
 }
 
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  username  String   @unique
+  avatarUrl String?
+  bannerUrl String?
+  roles     String[]
+
+  submissions Submission[]
+}
+
 model Submission {
   id          Int      @id @default(autoincrement())
   category    String
@@ -37,7 +48,9 @@ model Submission {
   isLocal     Boolean  @default(false)
   createdAt   DateTime @default(now())
 
-  status Status @default(PENDING)
+  status               Status @default(PENDING)
+  submissioner         User   @relation(fields: [submissionerUsername], references: [username])
+  submissionerUsername String
 }
 
 model Category {

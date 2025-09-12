@@ -84,7 +84,9 @@ export default function KeomojiForm({
         body: data,
       })
       .then(() => {
-        setChildren("커모지 제출이 완료되었습니다. 조금만 기다려주세요!");
+        setChildren(
+          "커모지 제출이 완료되었습니다. \n승인까지는 시간이 걸리니까 조금만 기다려주세요!",
+        );
         setIsGlobalModalVisible(true);
         setModalType("info");
       })
@@ -98,7 +100,7 @@ export default function KeomojiForm({
     <div className="w-full lg:max-w-3xl flex flex-col gap-4">
       <KeomojiImageArray imgUrl={imgUrl} />
       <form
-        className="grid grid-cols-1 sm:grid-cols-2  gap-4"
+        className="grid grid-cols-1 sm:grid-cols-2 min-w-2xl gap-4"
         onSubmit={handleSubmit(onSubmit)}
         onKeyDown={(e) => {
           if (e.key === "Enter") e.preventDefault();

@@ -8,9 +8,12 @@ export default function InputChip({
   children: React.ReactNode;
 }) {
   return (
-    <div className="w-fit px-3 py-1 bg-base-300 rounded-xl flex items-center gap-2">
+    <div
+      className="w-fit px-3 py-1 bg-base-300 rounded-xl flex items-center gap-2"
+      tabIndex={1}
+    >
       {children}
-      <button onClick={onDelete} className="cursor-pointer">
+      <button onClick={onDelete} className="cursor-pointer" tabIndex={1}>
         <X className="w-4 h-4" />
       </button>
     </div>
