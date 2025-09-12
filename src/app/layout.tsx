@@ -20,6 +20,7 @@ export default function RootLayout({
         <AppProvider>{children}</AppProvider>
         <div id="portal" />
         <div id="global-modal" />
+        <div id="global-loading" />
       </body>
     </html>
   );

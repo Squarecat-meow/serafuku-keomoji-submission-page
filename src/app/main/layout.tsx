@@ -1,3 +1,4 @@
+import GlobalLoading from "@/components/primitives/GlobalLoading";
 import GlobalModal from "@/components/primitives/GlobalModal";
 import NavBar from "@/components/primitives/Navbar";
 import { cookies } from "next/headers";
@@ -14,6 +15,7 @@ export default async function Layout({
         {children}
       </section>
       <GlobalModal />
+      <GlobalLoading />
     </main>
   );
 }

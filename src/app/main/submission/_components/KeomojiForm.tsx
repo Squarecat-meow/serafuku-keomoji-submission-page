@@ -7,7 +7,10 @@ import { KeyboardEvent, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import KeomojiImageArray from "./KeomojiImageArray";
 import KeomojiSubmissionConfirmModal from "./KeomojiSubmissionConfirmModal";
-import { useGlobalModalStore } from "@/stores/modalStore";
+import {
+  useGlobalLoadingStore,
+  useGlobalModalStore,
+} from "@/stores/modalStore";
 import { useShallow } from "zustand/shallow";
 import { api } from "@/services/apiClient";
 
@@ -50,6 +53,9 @@ export default function KeomojiForm({
         setModalType: state.setModalType,
       })),
     );
+  const setIsGlobalLoadingVisible = useGlobalLoadingStore(
+    (state) => state.setIsLoadingVisible,
+  );
 
   const handleKeydown = (e: KeyboardEvent<HTMLInputElement>) => {
     const inputValues = getValues("aliases") as unknown as string;
@@ -79,22 +85,24 @@ export default function KeomojiForm({
     const imageFile = await fetch(imgUrl).then((res) => res.blob());
     data.append("image", imageFile);
 
-    api
-      .post("/api/keomojis/submit", {
+    try {
+      setIsGlobalLoadingVisible(true);
+      await api.post("/api/keomojis/submit", {
         body: data,
-      })
-      .then(() => {
-        setChildren(
-          "커모지 제출이 완료되었습니다. \n승인까지는 시간이 걸리니까 조금만 기다려주세요!",
-        );
-        setIsGlobalModalVisible(true);
-        setModalType("info");
-      })
-      .catch((err) => {
-        setChildren(err.message);
-        setIsGlobalModalVisible(true);
-        setModalType("error");
       });
+
+      setChildren(
+        `커모지 제출이 완료되었습니다. \n승인까지는 시간이 걸리니까 조금만 기다려주세요!`,
+      );
+      setModalType("info");
+      setIsGlobalModalVisible(true);
+    } catch (err) {
+      if (err instanceof Error) setChildren(err.message);
+      setIsGlobalModalVisible(true);
+      setModalType("error");
+    } finally {
+      setIsGlobalLoadingVisible(false);
+    }
   };
   return (
     <div className="w-full lg:max-w-3xl flex flex-col gap-4">
