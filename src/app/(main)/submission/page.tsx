@@ -52,7 +52,7 @@ export default function Page() {
                 hidden
                 onChange={handleFileChange}
                 ref={fileRef}
-                accept="image/jpeg, image/png"
+                accept="image/jpeg, image/png, image/gif"
               />
             </>
           )}
