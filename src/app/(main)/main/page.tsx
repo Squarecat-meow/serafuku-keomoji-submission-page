@@ -6,18 +6,16 @@ import RecentSubmissionCardArray from "./_components/RecentSubmissionCardArray";
 export default async function Page() {
   const submissionStatus = await prisma.submission.findMany();
   const today = new Date();
-  const oneWeekLater = new Date(today);
-  oneWeekLater.setDate(today.getDate() + 7);
+  const oneWeekBefore = new Date(today);
+  oneWeekBefore.setDate(today.getDate() - 7);
   const recentSubmission = await prisma.submission.findMany({
     where: {
       createdAt: {
-        gte: new Date(),
-        lt: oneWeekLater,
+        gte: oneWeekBefore,
+        lt: new Date(),
       },
     },
   });
-
-  console.log(recentSubmission);
   return (
     <>
       <StatusCardArray submission={submissionStatus} />
