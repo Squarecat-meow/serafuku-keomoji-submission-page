@@ -6,12 +6,7 @@ const nextConfig: NextConfig = {
     {
       source: "/api/media/:path*",
       destination:
-        "https://yunomina-blog.s3.us-east-005.backblazeb2.com/:path*",
-    },
-    {
-      source: "/api/emojis/:path*",
-      destination:
-        "https://yunomina-blog.s3.us-east-005.backblazeb2.com/emojis/:path*",
+        "https://serafuku-keomoji-submission.s3.us-east-005.backblazeb2.com/:path*",
     },
   ],
   webpack: (config) => {
