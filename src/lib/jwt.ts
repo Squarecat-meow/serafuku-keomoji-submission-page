@@ -6,7 +6,6 @@ export async function signJwt(payload: Record<string, string>) {
   const jwt = await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt(new Date())
-    .setExpirationTime("15min")
     .sign(jwtSecret);
 
   return jwt;
