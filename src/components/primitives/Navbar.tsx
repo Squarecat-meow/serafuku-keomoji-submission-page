@@ -20,13 +20,13 @@ export default function NavBar({ token }: { token: string }) {
         </button>
       </div>
       <div className="navbar-center">
-        <Link href={"/submission"}>
+        <Link href={"/main/submission"}>
           <button className="btn btn-ghost text-xl text-base-content">
             <PlusIcon className="w-5 mr-1 stroke-gray-500" />
             <span className="hidden sm:inline-block">커모지 신청</span>
           </button>
         </Link>
-        <Link href={"/my-submission"}>
+        <Link href={"/main/my-submission"}>
           <button className="btn btn-ghost text-xl text-base-content">
             <UserPlus className="w-5 mr-1 stroke-gray-500" />
             <span className="hidden sm:inline-block">내가 신청한 커모지</span>

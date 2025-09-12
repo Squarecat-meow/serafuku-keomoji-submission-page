@@ -6,13 +6,13 @@ export default async function Layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get("accessToken")?.value ?? "";
+  const miAccessToken = cookieStore.get("misskeyAccessToken")?.value ?? "";
   return (
     <main className="w-full h-full flex flex-col lg:w-3/4 p-4 m-auto">
-      <NavBar token={accessToken} />
-      <article className="my-4 p-4 flex-1 bg-base-200/80 backdrop-blur-lg text-base-content space-y-2 rounded-2xl shadow">
+      <NavBar token={miAccessToken} />
+      <section className="my-4 p-4 flex-1 bg-base-200/80 backdrop-blur-lg text-base-content space-y-2 rounded-2xl shadow">
         {children}
-      </article>
+      </section>
       <GlobalModal />
     </main>
   );

@@ -1,13 +1,25 @@
 import { formDataParser } from "@/functions/formDataParser";
+import { jwtSecret } from "@/lib/jwt";
 import { prisma } from "@/lib/prismaClient";
 import { uploadFile } from "@/lib/s3";
 import { IKeomoji } from "@/types/misskey/keomojiType";
+import { jwtVerify } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
     const data = await req.formData();
     const submission = formDataParser<IKeomoji>(data);
+    if (!req.cookies.has("accessToken"))
+      return NextResponse.json(
+        { message: "액세스 토큰이 없습니다!" },
+        { status: 403 },
+      );
+    const accessToken = req.cookies.get("accessToken")!.value;
+    const username = await jwtVerify<{ username: string }>(
+      accessToken,
+      jwtSecret,
+    );
     const isDuplicated = await prisma.submission.findUnique({
       where: {
         name: submission.name,
@@ -39,9 +51,22 @@ export async function POST(req: NextRequest) {
 
     Object.assign(submission, { url: uploadedImgUrl });
 
+    const user = await prisma.user.findUnique({
+      where: {
+        username: username.payload.username,
+      },
+    });
+
+    if (!user)
+      return NextResponse.json(
+        { message: "신청한 유저는 없는 유저에요!" },
+        { status: 404 },
+      );
+
     const dbSubmission = await prisma.submission.create({
       data: {
         ...submission,
+        submissionerUsername: user.username,
       },
     });
 
