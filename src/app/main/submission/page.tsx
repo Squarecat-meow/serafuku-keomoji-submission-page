@@ -27,9 +27,10 @@ export default function Page() {
       <AnimatePresence mode="wait">
         <motion.div
           className="w-fit m-auto"
-          initial={{ x: 200, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -200, opacity: 0 }}
+          initial={{ scale: 1.1, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 1.1, opacity: 0 }}
+          transition={{ duration: 0.15, ease: "easeOut" }}
           key={isImageUploaded ? "form" : "loader"}
         >
           {isImageUploaded && imageUrl ? (
