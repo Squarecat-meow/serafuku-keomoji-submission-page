@@ -3,11 +3,11 @@
 import { useGlobalModalStore } from "@/stores/modalStore";
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useShallow } from "zustand/shallow";
 
-function GlobalModal() {
+export default function GlobalModal() {
   const { isModalVisible } = useGlobalModalStore(
     useShallow((state) => ({
       isModalVisible: state.isModalVisible,
@@ -87,7 +87,7 @@ function ModalBody({ className }: { className?: string }) {
         exit={{ scale: 0.9, opacity: 0 }}
       >
         <h1 className="text-xl font-bold">{modalTypeRef.current}</h1>
-        <p>{children}</p>
+        <p className="whitespace-pre-line">{children}</p>
         <button
           className="btn btn-accent"
           onClick={modalType === "info" ? handleInfoClick : handleErrorClick}
@@ -98,5 +98,3 @@ function ModalBody({ className }: { className?: string }) {
     </motion.div>
   );
 }
-
-export default GlobalModal;
