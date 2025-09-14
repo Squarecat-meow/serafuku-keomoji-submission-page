@@ -21,7 +21,7 @@ export default async function Page() {
       <StatusCardArray submission={submissionStatus} />
       <h1 className="mt-4 text-4xl font-bold">최근 신청된 커모지</h1>
       {recentSubmission.length !== 0 ? (
-        <RecentSubmissionCardArray data={recentSubmission} />
+        <RecentSubmissionCardArray data={recentSubmission.slice(0, 6)} />
       ) : (
         <div className="w-fit m-auto space-y-2 text-center">
           <div className="w-2xs aspect-square relative">
