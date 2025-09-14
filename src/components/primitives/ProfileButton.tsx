@@ -4,7 +4,7 @@ import { IUser } from "@/types/auth/authType";
 
 export default function ProfileButton({ user }: { user: IUser }) {
   return (
-    <div className="navbar-end dropdown">
+    <div className="dropdown">
       <div className="btn btn-ghost px-2 font-light" tabIndex={0} role="button">
         <div className="flex gap-2">
           <div className="text-right">

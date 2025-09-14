@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader2Icon, PlusIcon, UserPlus } from "lucide-react";
+import { ListTodo, Loader2Icon, PlusIcon, UserPlus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import ProfileButton from "./ProfileButton";
@@ -26,6 +26,12 @@ export default function NavBar({ token }: { token: string }) {
             <span className="hidden sm:inline-block">커모지 신청</span>
           </button>
         </Link>
+        <Link href={"/main/submission-list"}>
+          <button className="btn btn-ghost text-xl text-base-content">
+            <ListTodo className="w-5 mr-1 stroke-gray-500" />
+            <span className="hidden sm:inline-block">신청 커모지 목록</span>
+          </button>
+        </Link>
         <Link href={"/main/my-submission"}>
           <button className="btn btn-ghost text-xl text-base-content">
             <UserPlus className="w-5 mr-1 stroke-gray-500" />
@@ -33,22 +39,24 @@ export default function NavBar({ token }: { token: string }) {
           </button>
         </Link>
       </div>
-      {user && !isPending ? (
-        <>
-          {user.bannerUrl ? (
-            <img
-              src={user.bannerUrl}
-              alt={`${user.username}의 헤더`}
-              className="absolute right-0 object-cover h-full rounded-r-2xl w-1/6 mask-l-from-30%"
-            />
-          ) : (
-            <div />
-          )}
-          <ProfileButton user={user} />
-        </>
-      ) : (
-        <Loader2Icon className="animate-spin" />
-      )}
+      <div className="navbar-end">
+        {user && !isPending ? (
+          <>
+            {user.bannerUrl ? (
+              <img
+                src={user.bannerUrl}
+                alt={`${user.username}의 헤더`}
+                className="absolute right-0 object-cover h-full rounded-r-2xl w-1/6 mask-l-from-30%"
+              />
+            ) : (
+              <div />
+            )}
+            <ProfileButton user={user} />
+          </>
+        ) : (
+          <Loader2Icon className="animate-spin" />
+        )}
+      </div>
     </nav>
   );
 }

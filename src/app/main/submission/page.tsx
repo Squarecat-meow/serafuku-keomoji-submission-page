@@ -23,7 +23,7 @@ export default function Page() {
   };
   return (
     <div className="w-full space-y-4 text-center">
-      <h1 className="text-2xl font-bold">커모지 신청</h1>
+      <h1 className="text-4xl font-bold">커모지 신청</h1>
       <AnimatePresence mode="wait">
         <motion.div
           className="w-fit m-auto"
