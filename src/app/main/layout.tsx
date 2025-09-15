@@ -10,9 +10,9 @@ export default async function Layout({
   const cookieStore = await cookies();
   const miAccessToken = cookieStore.get("misskeyAccessToken")?.value ?? "";
   return (
-    <main className="w-full h-full flex flex-col lg:w-3/4 p-4 m-auto">
+    <main className="w-full flex flex-col lg:w-3/4 p-4 m-auto">
       <NavBar token={miAccessToken} />
-      <section className="my-4 p-4 flex-1 bg-base-200/80 backdrop-blur-lg text-base-content rounded-2xl shadow">
+      <section className="h-full my-4 p-4 flex-1 bg-base-200/80 backdrop-blur-lg text-base-content rounded-2xl shadow">
         <AnimatePresenceWrapper>{children}</AnimatePresenceWrapper>
       </section>
       <GlobalModal />

@@ -2,15 +2,15 @@ import Chip from "@/components/primitives/Chip";
 import { Submission } from "@/generated/prisma";
 import * as motion from "motion/react-client";
 
-export default function RecentSubmissionCard({ data }: { data: Submission }) {
+export default function SubmissionCard({ data }: { data: Submission }) {
   return (
-    <article className="w-full p-4 flex gap-4 bg-base-200 rounded-2xl">
-      <div className="relative w-36 object-cover aspect-square">
+    <article className="w-full p-4 flex flex-col gap-4 bg-base-200 rounded-2xl">
+      <div className="w-1/3 aspect-square m-auto">
         <motion.img
           whileHover={{ scale: 1.1, rotateZ: 3 }}
           src={data.url}
           alt={`:${data.name}: 커모지`}
-          className="size-full rounded-2xl object-cover"
+          className="w-full aspect-square rounded-2xl object-cover"
         />
       </div>
       <div className="space-y-2">

@@ -1,37 +1,26 @@
-import { prisma } from "@/lib/prismaClient";
 import StatusCardArray from "./_components/StatusCardArray";
 import Image from "next/image";
-import RecentSubmissionCardArray from "./_components/RecentSubmissionCardArray";
+import SubmissionPagination from "./_components/SubmissionPagination";
+import { prisma } from "@/lib/prismaClient";
 
 export default async function Page() {
-  const submissionStatus = await prisma.submission.findMany();
-  const today = new Date();
-  const oneWeekBefore = new Date(today);
-  oneWeekBefore.setDate(today.getDate() - 7);
-  const recentSubmission = await prisma.submission.findMany({
-    where: {
-      createdAt: {
-        gte: oneWeekBefore,
-        lt: new Date(),
-      },
-    },
-  });
+  const submission = await prisma.submission.findMany();
   return (
     <>
-      <StatusCardArray submission={submissionStatus} />
-      <h1 className="mt-4 text-4xl font-bold">최근 신청된 커모지</h1>
-      {recentSubmission.length !== 0 ? (
-        <RecentSubmissionCardArray data={recentSubmission.slice(0, 6)} />
+      <StatusCardArray submission={submission} />
+      <h1 className="mt-4 text-4xl font-bold">신청된 커모지 리스트</h1>
+      {submission.length !== 0 ? (
+        <SubmissionPagination />
       ) : (
         <div className="w-fit m-auto space-y-2 text-center">
           <div className="w-2xs aspect-square relative">
             <Image
               src={"/images/no_data.png"}
-              alt="최근 신청된 커모지가 없습니다"
+              alt="신청된 커모지가 없습니다"
               fill
             />
           </div>
-          <p className="text-xl">최근 신청된 커모지가 없습니다!</p>
+          <p className="text-xl">신청된 커모지가 없습니다!</p>
         </div>
       )}
     </>

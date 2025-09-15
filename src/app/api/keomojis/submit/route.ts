@@ -76,3 +76,30 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: err }, { status: 500 });
   }
 }
+
+export async function GET(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams;
+  const params = searchParams.get("page");
+  const pageSize = 12;
+
+  if (!params)
+    return NextResponse.json(
+      { message: "올바른 리스트 요청이 아닙니다!" },
+      { status: 400 },
+    );
+
+  const page = parseInt(params);
+  const skip = (page - 1) * pageSize;
+  const results = await prisma.submission.findMany({
+    skip,
+    take: pageSize,
+  });
+
+  if (!results) return NextResponse.json({}, { status: 204 });
+
+  const totalCount = await prisma.submission.count();
+  const hasNextPage = totalCount >= skip + pageSize;
+  const hasPrevPage = totalCount <= skip + pageSize;
+
+  return NextResponse.json({ results, totalCount, hasNextPage, hasPrevPage });
+}
