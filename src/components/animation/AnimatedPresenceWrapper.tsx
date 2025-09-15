@@ -48,7 +48,7 @@ export default function AnimatePresenceWrapper({
 
   return (
     <AnimatePresence mode="wait" initial={false}>
-      <motion.div
+      <motion.article
         className="space-y-4"
         key={segment}
         initial={{ opacity: 0 }}
@@ -60,7 +60,7 @@ export default function AnimatePresenceWrapper({
         }}
       >
         <FrozenRouter>{children}</FrozenRouter>
-      </motion.div>
+      </motion.article>
     </AnimatePresence>
   );
 }

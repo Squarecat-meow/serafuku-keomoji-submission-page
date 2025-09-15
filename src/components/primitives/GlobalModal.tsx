@@ -88,12 +88,14 @@ function ModalBody({ className }: { className?: string }) {
       >
         <h1 className="text-xl font-bold">{modalTypeRef.current}</h1>
         <p className="whitespace-pre-line">{children}</p>
-        <button
-          className="btn btn-accent"
-          onClick={modalType === "info" ? handleInfoClick : handleErrorClick}
-        >
-          확인
-        </button>
+        <div className="w-full text-right">
+          <button
+            className="btn btn-accent"
+            onClick={modalType === "info" ? handleInfoClick : handleErrorClick}
+          >
+            확인
+          </button>
+        </div>
       </motion.section>
     </motion.div>
   );
