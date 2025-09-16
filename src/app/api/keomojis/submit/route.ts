@@ -1,4 +1,5 @@
 import { formDataParser } from "@/functions/formDataParser";
+import { Status, Submission } from "@/generated/prisma";
 import { jwtSecret } from "@/lib/jwt";
 import { prisma } from "@/lib/prismaClient";
 import { uploadFile } from "@/lib/s3";
@@ -79,18 +80,20 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
-  const params = searchParams.get("page");
+  const pageParam = searchParams.get("page");
+  const statusParam = searchParams.get("status") as Status;
   const pageSize = 12;
 
-  if (!params)
+  if ((!pageParam || !statusParam) && !pageParam)
     return NextResponse.json(
       { message: "올바른 리스트 요청이 아닙니다!" },
       { status: 400 },
     );
 
-  const page = parseInt(params);
+  const page = parseInt(pageParam);
   const skip = (page - 1) * pageSize;
   const results = await prisma.submission.findMany({
+    ...(statusParam ? { where: { status: statusParam } } : {}),
     skip,
     take: pageSize,
   });

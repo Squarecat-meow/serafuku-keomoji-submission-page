@@ -5,11 +5,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import SubmissionCardArray from "./SubmissionCardArray";
 import { Loader2Icon } from "lucide-react";
+import { useFilterStore } from "@/stores/filterStore";
 
 export default function SubmissionPagination() {
   const [page, setPage] = useState(1);
+  const statusValue = useFilterStore((state) => state.value);
   const { data, isLoading } = useQuery(
-    submissionQueries.submissionOptions(page),
+    submissionQueries.submissionOptions(page, statusValue),
   );
   const pageList =
     data &&

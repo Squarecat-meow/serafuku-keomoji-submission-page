@@ -1,11 +1,15 @@
 import { getPaginatedSubmissions } from "@/services/submission";
+import { TStatusPayload } from "@/types/status/statusType";
 import { queryOptions } from "@tanstack/react-query";
 
 export const submissionQueries = {
-  submission: (page: number) => ["submission", page],
-  submissionOptions: (page: number) =>
+  submission: (page: number, status: TStatusPayload) => [
+    "submission",
+    { page, status },
+  ],
+  submissionOptions: (page: number, status: TStatusPayload) =>
     queryOptions({
-      queryKey: [...submissionQueries.submission(page)],
-      queryFn: () => getPaginatedSubmissions(page),
+      queryKey: [...submissionQueries.submission(page, status)],
+      queryFn: () => getPaginatedSubmissions(page, status),
     }),
 };
