@@ -27,3 +27,27 @@ export async function getPaginatedSubmissions(
     throw err;
   }
 }
+
+export async function getMySubmissions() {
+  try {
+    const res = await api.get("/api/keomojis/my-submission").json();
+    return res as Submission[];
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function getMySingleSubmission(id: number) {
+  try {
+    const res = await api
+      .get("/api/keomojis/my-single-submission", {
+        searchParams: {
+          id,
+        },
+      })
+      .json();
+    return res as Submission;
+  } catch (err) {
+    throw err;
+  }
+}
