@@ -1,26 +1,38 @@
+"use client";
+
 import Chip from "@/components/primitives/Chip";
 import { Submission } from "@/generated/prisma";
 import { EllipsisVertical } from "lucide-react";
-import * as motion from "motion/react-client";
-import Link from "next/link";
+import { motion } from "motion/react";
 
-export default function MySubmissionCard({ data }: { data: Submission }) {
+export default function MySubmissionCard({
+  data,
+  setData,
+  setIsVisible,
+}: {
+  data: Submission;
+  setData: (id: Submission) => void;
+  setIsVisible: (state: boolean) => void;
+}) {
   return (
     <motion.article
       className="w-full p-4 relative flex flex-col gap-4 bg-base-200 rounded-2xl"
       key={data.id}
       layoutId={data.name}
     >
-      <div className="w-1/3 aspect-square m-auto">
-        {/* TODO: 이미지 클릭하면 intercepter route로 모달 띄우기 */}
-        <Link href={`/main/my-submission/${data.id}`}>
-          <motion.img
-            whileHover={{ scale: 1.1, rotateZ: 3 }}
-            src={data.url}
-            alt={`:${data.name}: 커모지`}
-            className="w-full aspect-square rounded-2xl object-cover"
-          />
-        </Link>
+      <div
+        className="w-1/3 aspect-square m-auto"
+        onClick={() => {
+          setData(data);
+          setIsVisible(true);
+        }}
+      >
+        <motion.img
+          whileHover={{ scale: 1.1, rotateZ: 3 }}
+          src={data.url}
+          alt={`:${data.name}: 커모지`}
+          className="w-full aspect-square rounded-2xl object-cover"
+        />
       </div>
       <div className="space-y-2">
         <div>

@@ -1,4 +1,4 @@
-import MySubmissionDetail from "./components/MySubmissionDetail";
+import MySubmissionDetail from "./_components/MySubmissionDetail";
 
 export default async function Page({
   params,

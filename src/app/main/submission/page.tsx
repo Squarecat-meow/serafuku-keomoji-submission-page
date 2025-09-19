@@ -25,39 +25,44 @@ export default function Page() {
     <div className="w-full space-y-4 text-center">
       <h1 className="text-4xl font-bold">커모지 신청</h1>
       <AnimatePresence mode="wait">
-        <motion.div
-          className="w-fit m-auto"
-          initial={{ scale: 1.1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 1.1, opacity: 0 }}
-          transition={{ duration: 0.15, ease: "easeOut" }}
-          key={isImageUploaded ? "form" : "loader"}
-        >
-          {isImageUploaded && imageUrl ? (
-            <>
-              <KeomojiForm imgUrl={imageUrl} onCancel={handleBackButtonClick} />
-            </>
-          ) : (
-            <>
-              <div className="w-2xs aspect-square p-2 rounded-xl border border-dashed border-gray-400 dark:border-gray-600">
-                <button
-                  className="w-full h-full rounded-xl bg-transparent transition-colors hover:bg-gray-200 dark:hover:bg-gray-800"
-                  onClick={() => fileRef.current?.click()}
-                >
-                  <ImageUp className="w-8 h-8 m-auto mb-2" />
-                  클릭하여 커모지를 선택
-                </button>
-              </div>
-              <input
-                type="file"
-                hidden
-                onChange={handleFileChange}
-                ref={fileRef}
-                accept="image/jpeg, image/png, image/gif"
-              />
-            </>
-          )}
-        </motion.div>
+        {isImageUploaded && imageUrl ? (
+          <motion.div
+            className="w-fit m-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            key="form"
+          >
+            <KeomojiForm imgUrl={imageUrl} onCancel={handleBackButtonClick} />
+          </motion.div>
+        ) : (
+          <motion.div
+            className="w-fit m-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            key="loader"
+          >
+            <div className="w-2xs aspect-square p-2 rounded-xl border border-dashed border-gray-400 dark:border-gray-600">
+              <button
+                className="w-full h-full rounded-xl bg-transparent transition-colors hover:bg-gray-200 dark:hover:bg-gray-800"
+                onClick={() => fileRef.current?.click()}
+              >
+                <ImageUp className="w-8 h-8 m-auto mb-2" />
+                클릭하여 커모지를 선택
+              </button>
+            </div>
+            <input
+              type="file"
+              hidden
+              onChange={handleFileChange}
+              ref={fileRef}
+              accept="image/jpeg, image/png, image/gif"
+            />
+          </motion.div>
+        )}
       </AnimatePresence>
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import Modal from "@/components/primitives/Modal";
+import { Modal } from "@/components/primitives/Modal";
 
 export default function KeomojiSubmissionConfirmModal({
   isVisible,
@@ -12,28 +12,27 @@ export default function KeomojiSubmissionConfirmModal({
   callback: () => unknown;
 }) {
   return (
-    <Modal.Root isVisible={isVisible} setIsVisible={setIsVisible}>
-      <Modal.Body className="w-md space-y-4">
-        <h1 className="text-xl font-bold">확인</h1>
-        <p>이대로 커모지를 제출하시겠습니까?</p>
-        <div className="space-x-4 text-right">
-          <button
-            className="btn btn-outline"
-            onClick={() => setIsVisible(false)}
-          >
-            취소
-          </button>
-          <button
-            className="btn btn-accent"
-            onClick={() => {
-              callback();
-              setIsVisible(false);
-            }}
-          >
-            확인
-          </button>
-        </div>
-      </Modal.Body>
-    </Modal.Root>
+    <Modal
+      isVisible={isVisible}
+      setIsVisible={setIsVisible}
+      className="w-md space-y-4"
+    >
+      <h1 className="text-xl font-bold">확인</h1>
+      <p>이대로 커모지를 제출하시겠습니까?</p>
+      <div className="space-x-4 text-right">
+        <button className="btn btn-outline" onClick={() => setIsVisible(false)}>
+          취소
+        </button>
+        <button
+          className="btn btn-accent"
+          onClick={() => {
+            callback();
+            setIsVisible(false);
+          }}
+        >
+          확인
+        </button>
+      </div>
+    </Modal>
   );
 }

@@ -1,6 +1,9 @@
+"use client";
+
 import { AnimatePresence, motion } from "motion/react";
 import React, { createContext, useContext, useEffect } from "react";
 import { createPortal } from "react-dom";
+import AnimatePresenceWrapper from "../animation/AnimatedPresenceWrapper";
 
 interface IModal {
   isVisible: boolean;
@@ -14,14 +17,18 @@ export const ModalInitialValues: IModal = {
 
 const ModalContext = createContext(ModalInitialValues);
 
-function ModalRoot({
+export function Modal({
   children,
   isVisible,
   setIsVisible,
+  className,
+  animatedKey,
 }: {
   children: React.ReactNode;
   isVisible: boolean;
   setIsVisible: (state: boolean) => void;
+  className?: string;
+  animatedKey: string;
 }) {
   useEffect(() => {
     if (isVisible) {
@@ -37,45 +44,66 @@ function ModalRoot({
 
   return (
     <ModalContext.Provider value={{ isVisible, setIsVisible }}>
-      {createPortal(
-        <AnimatePresence mode="wait">{isVisible && children}</AnimatePresence>,
-        document.getElementById("portal") as Element,
-      )}
+      {isVisible
+        ? createPortal(
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={animatedKey ?? "modal"}
+                className="bg-white/30 dark:bg-black/30 backdrop-blur-lg fixed inset-0 z-[2] grid place-items-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsVisible(false)}
+              >
+                <motion.section
+                  className={`w-fit p-4 m-4 z-[3] bg-base-100 rounded-2xl shadow-lg ${className}`}
+                  initial={{ scale: 1.1, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.9, opacity: 0 }}
+                >
+                  {children}
+                </motion.section>
+              </motion.div>
+            </AnimatePresence>,
+            document.getElementById("portal") as Element,
+          )
+        : null}
     </ModalContext.Provider>
   );
 }
 
-function ModalBody({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  const { setIsVisible } = useContext(ModalContext);
-  return (
-    <motion.div
-      className="bg-white/30 dark:bg-black/30 backdrop-blur-lg fixed inset-0 z-[2] grid place-items-center"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={() => setIsVisible(false)}
-    >
-      <motion.section
-        className={`w-fit p-4 m-4 z-[3] bg-base-100 rounded-2xl shadow-lg ${className}`}
-        initial={{ scale: 1.1, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
-      >
-        {children}
-      </motion.section>
-    </motion.div>
-  );
-}
-
-const Modal = {
-  Root: ModalRoot,
-  Body: ModalBody,
-};
-
-export default Modal;
+// function ModalBody({
+//   children,
+//   className,
+// }: {
+//   children: React.ReactNode;
+//   className?: string;
+// }) {
+//   const { setIsVisible } = useContext(ModalContext);
+//   return (
+//     <motion.div
+//       key="modal"
+//       className="bg-white/30 dark:bg-black/30 backdrop-blur-lg fixed inset-0 z-[2] grid place-items-center"
+//       initial={{ opacity: 0 }}
+//       animate={{ opacity: 1 }}
+//       exit={{ opacity: 0 }}
+//       onClick={() => setIsVisible(false)}
+//     >
+//       <motion.section
+//         className={`w-fit p-4 m-4 z-[3] bg-base-100 rounded-2xl shadow-lg ${className}`}
+//         initial={{ scale: 1.1, opacity: 0 }}
+//         animate={{ scale: 1, opacity: 1 }}
+//         exit={{ scale: 0.9, opacity: 0 }}
+//       >
+//         {children}
+//       </motion.section>
+//     </motion.div>
+//   );
+// }
+//
+// const Modal = {
+//   Root: ModalRoot,
+//   Body: ModalBody,
+// };
+//
+// export default Modal;
