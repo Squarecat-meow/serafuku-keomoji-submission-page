@@ -33,12 +33,14 @@ export default function MySubmissionCardArray() {
           </>
         )}
       </section>
-      <MySubmissionModal
-        animatedKey={data?.id.toString()}
-        data={data}
-        isVisible={isVisible}
-        setIsVisible={setIsVisible}
-      />
+      {data && (
+        <MySubmissionModal
+          animatedKey={data?.id.toString()}
+          data={data}
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+        />
+      )}
     </>
   );
 }

@@ -15,11 +15,7 @@ export default function MySubmissionCard({
   setIsVisible: (state: boolean) => void;
 }) {
   return (
-    <motion.article
-      className="w-full p-4 relative flex flex-col gap-4 bg-base-200 rounded-2xl"
-      key={data.id}
-      layoutId={data.name}
-    >
+    <article className="w-full p-4 relative flex flex-col gap-4 bg-base-200 rounded-2xl">
       <div
         className="w-1/3 aspect-square m-auto"
         onClick={() => {
@@ -31,7 +27,7 @@ export default function MySubmissionCard({
           whileHover={{ scale: 1.1, rotateZ: 3 }}
           src={data.url}
           alt={`:${data.name}: 커모지`}
-          className="w-full aspect-square rounded-2xl object-cover"
+          className="w-full aspect-square rounded-2xl object-contain cursor-pointer"
         />
       </div>
       <div className="space-y-2">
@@ -54,8 +50,12 @@ export default function MySubmissionCard({
         </div>
         <p>신청한 학생: {data.submissionerUsername}</p>
       </div>
-      <div className="dropdown dropdown-end absolute top-0 right-0">
-        <div className="px-1 btn btn-ghost" role="button" tabIndex={0}>
+      <div className="dropdown dropdown-end absolute top-2 right-2">
+        <div
+          className="px-1 btn btn-ghost btn-circle"
+          role="button"
+          tabIndex={0}
+        >
           <EllipsisVertical />
         </div>
         <ul className="dropdown-content menu bg-base-200 border border-gray-500 shadow-lg rounded-box z-[1] w-28">
@@ -65,6 +65,6 @@ export default function MySubmissionCard({
           </button>
         </ul>
       </div>
-    </motion.article>
+    </article>
   );
 }

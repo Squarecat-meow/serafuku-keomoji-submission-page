@@ -2,15 +2,29 @@ import Chip from "@/components/primitives/Chip";
 import { Submission } from "@/generated/prisma";
 import * as motion from "motion/react-client";
 
-export default function SubmissionCard({ data }: { data: Submission }) {
+export default function SubmissionCard({
+  data,
+  setData,
+  setIsVisible,
+}: {
+  data: Submission;
+  setData: (id: Submission) => void;
+  setIsVisible: (state: boolean) => void;
+}) {
   return (
     <article className="w-full p-4 flex flex-col gap-4 bg-base-200 rounded-2xl">
-      <div className="w-1/3 aspect-square m-auto">
+      <div
+        className="w-1/3 aspect-square m-auto"
+        onClick={() => {
+          setData(data);
+          setIsVisible(true);
+        }}
+      >
         <motion.img
           whileHover={{ scale: 1.1, rotateZ: 3 }}
           src={data.url}
           alt={`:${data.name}: 커모지`}
-          className="w-full aspect-square rounded-2xl object-cover"
+          className="w-full aspect-square rounded-2xl object-contain cursor-pointer"
         />
       </div>
       <div className="space-y-2">

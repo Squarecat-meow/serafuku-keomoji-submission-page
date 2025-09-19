@@ -71,39 +71,3 @@ export function Modal({
     </ModalContext.Provider>
   );
 }
-
-// function ModalBody({
-//   children,
-//   className,
-// }: {
-//   children: React.ReactNode;
-//   className?: string;
-// }) {
-//   const { setIsVisible } = useContext(ModalContext);
-//   return (
-//     <motion.div
-//       key="modal"
-//       className="bg-white/30 dark:bg-black/30 backdrop-blur-lg fixed inset-0 z-[2] grid place-items-center"
-//       initial={{ opacity: 0 }}
-//       animate={{ opacity: 1 }}
-//       exit={{ opacity: 0 }}
-//       onClick={() => setIsVisible(false)}
-//     >
-//       <motion.section
-//         className={`w-fit p-4 m-4 z-[3] bg-base-100 rounded-2xl shadow-lg ${className}`}
-//         initial={{ scale: 1.1, opacity: 0 }}
-//         animate={{ scale: 1, opacity: 1 }}
-//         exit={{ scale: 0.9, opacity: 0 }}
-//       >
-//         {children}
-//       </motion.section>
-//     </motion.div>
-//   );
-// }
-//
-// const Modal = {
-//   Root: ModalRoot,
-//   Body: ModalBody,
-// };
-//
-// export default Modal;
