@@ -5,7 +5,7 @@ import { Submission } from "@/generated/prisma";
 interface ICard {
   status: Submission["status"] | "TOTAL";
   children: React.ReactNode;
-  submission: Submission[];
+  submission: number;
 }
 
 export default function Card({ status, children, submission }: ICard) {
@@ -15,9 +15,6 @@ export default function Card({ status, children, submission }: ICard) {
     REJECT: <XCircleIcon className="stroke-error" />,
     ACCEPTED: <CheckCircle className="stroke-success" />,
   };
-  const submissionStatusQuantity = submission.filter(
-    (el) => el.status === status.toString(),
-  );
   return (
     <article className="w-full flex flex-col bg-base-100 p-4 rounded-xl">
       <div className="flex justify-between items-center">
@@ -25,11 +22,7 @@ export default function Card({ status, children, submission }: ICard) {
         <Badge>{statusIcons[status]}</Badge>
       </div>
       <div>
-        <p>
-          {status === "TOTAL"
-            ? submission.length
-            : submissionStatusQuantity.length}
-        </p>
+        <p>{submission}</p>
       </div>
     </article>
   );
