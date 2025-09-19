@@ -94,6 +94,9 @@ export async function GET(req: NextRequest) {
   const skip = (page - 1) * pageSize;
   const results = await prisma.submission.findMany({
     ...(statusParam ? { where: { status: statusParam } } : {}),
+    orderBy: {
+      createdAt: "desc",
+    },
     skip,
     take: pageSize,
   });

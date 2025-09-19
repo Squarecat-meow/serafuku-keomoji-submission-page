@@ -26,6 +26,9 @@ export async function GET(req: NextRequest) {
     where: {
       submissionerUsername: username.payload.username,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 
   return NextResponse.json(data);
