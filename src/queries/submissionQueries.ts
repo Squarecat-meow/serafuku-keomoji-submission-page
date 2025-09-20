@@ -1,10 +1,16 @@
 import {
+  deleteSubmission,
   getMySingleSubmission,
   getMySubmissions,
   getPaginatedSubmissions,
 } from "@/services/submission";
+import { TGlobalModalType } from "@/types/modal/globalModalType";
 import { TStatusPayload } from "@/types/status/statusType";
-import { queryOptions } from "@tanstack/react-query";
+import {
+  mutationOptions,
+  QueryClient,
+  queryOptions,
+} from "@tanstack/react-query";
 
 export const submissionQueries = {
   submission: ({
@@ -27,11 +33,44 @@ export const mySubmissionQueries = {
     queryOptions({
       queryKey: [...mySubmissionQueries.mySubmission()],
       queryFn: () => getMySubmissions(),
+      staleTime: 1000 * 60 * 5,
     }),
   mySingleSubmission: () => ["my-single-submission"],
   mySingleSubmissionOptions: (id: number) =>
     queryOptions({
       queryKey: [...mySubmissionQueries.mySingleSubmission()],
       queryFn: () => getMySingleSubmission(id),
+    }),
+  mySubmissionDeleteMutationOptions: (
+    id: number,
+    queryClient: QueryClient,
+    setDetailModalVisible: (state: boolean) => void,
+    setModalChildren: (children: string) => void,
+    setModalType: (type: TGlobalModalType) => void,
+    setGlobalModalVisible: (state: boolean) => void,
+    setLoading: (state: boolean) => void,
+  ) =>
+    mutationOptions({
+      mutationKey: [...mySubmissionQueries.mySubmission()],
+      mutationFn: () => deleteSubmission(id),
+      onMutate: () => {
+        setDetailModalVisible(false);
+        setLoading(true);
+      },
+      onSuccess: () => {
+        setLoading(false);
+        queryClient.invalidateQueries({
+          queryKey: [...mySubmissionQueries.mySubmission()],
+        });
+        setModalType("info");
+        setModalChildren("삭제가 완료되었습니다!");
+        setGlobalModalVisible(true);
+      },
+      onError: () => {
+        setLoading(false);
+        setModalType("error");
+        setModalChildren("삭제중 에러가 발생했습니다!");
+        setGlobalModalVisible(true);
+      },
     }),
 };

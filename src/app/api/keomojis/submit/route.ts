@@ -1,5 +1,5 @@
 import { formDataParser } from "@/functions/formDataParser";
-import { Status, Submission } from "@/generated/prisma";
+import { Status } from "@/generated/prisma";
 import { jwtSecret } from "@/lib/jwt";
 import { prisma } from "@/lib/prismaClient";
 import { uploadFile } from "@/lib/s3";
@@ -108,4 +108,28 @@ export async function GET(req: NextRequest) {
   const hasPrevPage = totalCount <= skip + pageSize;
 
   return NextResponse.json({ results, totalCount, hasNextPage, hasPrevPage });
+}
+
+export async function DELETE(req: NextRequest) {
+  const { id } = (await req.json()) as { id: number };
+
+  if (!id)
+    return NextResponse.json(
+      { message: "지울 대상이 없습니다!" },
+      { status: 404 },
+    );
+
+  const res = await prisma.submission.delete({
+    where: {
+      id,
+    },
+  });
+
+  if (!res)
+    return NextResponse.json(
+      { message: "데이터를 삭제하는데 실패했습니다!" },
+      { status: 500 },
+    );
+
+  return NextResponse.json({ ok: true });
 }

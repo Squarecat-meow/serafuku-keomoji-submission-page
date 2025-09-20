@@ -51,3 +51,12 @@ export async function getMySingleSubmission(id: number) {
     throw err;
   }
 }
+
+export async function deleteSubmission(id: number) {
+  try {
+    const res = await api.delete("/api/keomojis/submit", { json: { id } });
+    return res;
+  } catch (err) {
+    throw err;
+  }
+}
