@@ -2,25 +2,26 @@
 
 import Chip from "@/components/primitives/Chip";
 import { Submission } from "@/generated/prisma";
-import { EllipsisVertical } from "lucide-react";
+import { useKeomojiStore } from "@/stores/kemojiDetailStore";
 import { motion } from "motion/react";
 
 export default function MySubmissionCard({
   data,
-  setData,
-  setIsVisible,
+  onImageClick,
 }: {
   data: Submission;
-  setData: (id: Submission) => void;
-  setIsVisible: (state: boolean) => void;
+  onImageClick: (state: boolean) => void;
 }) {
+  const setSelectedKeomoji = useKeomojiStore(
+    (state) => state.setSelectedKeomoji,
+  );
   return (
     <article className="w-full p-4 relative flex flex-col gap-4 bg-base-200 rounded-2xl">
       <div
         className="w-1/3 aspect-square m-auto"
         onClick={() => {
-          setData(data);
-          setIsVisible(true);
+          setSelectedKeomoji(data);
+          onImageClick(true);
         }}
       >
         <motion.img
@@ -49,21 +50,6 @@ export default function MySubmissionCard({
           ))}
         </div>
         <p>신청한 학생: {data.submissionerUsername}</p>
-      </div>
-      <div className="dropdown dropdown-end absolute top-2 right-2">
-        <div
-          className="px-1 btn btn-ghost btn-circle"
-          role="button"
-          tabIndex={0}
-        >
-          <EllipsisVertical />
-        </div>
-        <ul className="dropdown-content menu bg-base-200 border border-gray-500 shadow-lg rounded-box z-[1] w-28">
-          <button className="px-2 btn btn-sm btn-ghost">수정하기</button>
-          <button className="px-2 btn btn-sm btn-ghost hover:bg-error">
-            삭제하기
-          </button>
-        </ul>
       </div>
     </article>
   );

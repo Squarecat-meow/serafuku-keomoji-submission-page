@@ -1,3 +1,4 @@
+import { TGlobalModalType } from "@/types/modal/globalModalType";
 import { create } from "zustand";
 
 interface IGlobalModalStore {
@@ -5,7 +6,7 @@ interface IGlobalModalStore {
   setIsModalVisible: (state: boolean) => void;
   children: string | null;
   setChildren: (children: string) => void;
-  modalType: "info" | "warning" | "error" | null;
+  modalType: TGlobalModalType;
   setModalType: (type: IGlobalModalStore["modalType"]) => void;
 }
 

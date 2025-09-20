@@ -6,14 +6,24 @@ import { Loader2Icon } from "lucide-react";
 import MySubmissionCard from "./_components/MySubmissionCard";
 import MySubmissionModal from "./_components/MySubmissionModal";
 import { useState } from "react";
-import { Submission } from "@/generated/prisma";
+import MySubmissionDeleteModal from "./_components/MySubmissionDeleteModal";
+import { useKeomojiStore } from "@/stores/kemojiDetailStore";
 
 export default function MySubmissionCardArray() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [data, setData] = useState<Submission | null>(null);
+  const [isDetailVisible, setIsDetailVisible] = useState<boolean>(false);
+  const [isDeleteVisible, setIsDeleteVisible] = useState<boolean>(false);
+  const selectedKeomoji = useKeomojiStore((state) => state.selectedKeomoji);
   const { data: mySubmissions, isLoading } = useQuery(
     mySubmissionQueries.mySubmissionOptions(),
   );
+
+  const handleToggleDetailModal = (state: boolean) => {
+    setIsDetailVisible(state);
+  };
+  const handleToggleDeleteModal = (state: boolean) => {
+    setIsDeleteVisible(state);
+  };
+
   return (
     <>
       <h1 className="text-4xl font-bold">내가 신청한 커모지</h1>
@@ -25,21 +35,28 @@ export default function MySubmissionCardArray() {
             {mySubmissions?.map((el) => (
               <MySubmissionCard
                 data={el}
-                setData={setData}
-                setIsVisible={setIsVisible}
+                onImageClick={() => handleToggleDetailModal(true)}
                 key={el.id}
               />
             ))}
           </>
         )}
       </section>
-      {data && (
-        <MySubmissionModal
-          animatedKey={data?.id.toString()}
-          data={data}
-          isVisible={isVisible}
-          setIsVisible={setIsVisible}
-        />
+      {selectedKeomoji && (
+        <>
+          <MySubmissionModal
+            data={selectedKeomoji}
+            isVisible={isDetailVisible}
+            onDetailClick={handleToggleDetailModal}
+            onDeleteClick={handleToggleDeleteModal}
+          />
+          <MySubmissionDeleteModal
+            data={selectedKeomoji}
+            isVisible={isDeleteVisible}
+            onDetailVisible={handleToggleDetailModal}
+            onDeleteVisible={handleToggleDeleteModal}
+          />
+        </>
       )}
     </>
   );
