@@ -1,34 +1,19 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import React, { createContext, useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { createPortal } from "react-dom";
-import AnimatePresenceWrapper from "../animation/AnimatedPresenceWrapper";
-
-interface IModal {
-  isVisible: boolean;
-  setIsVisible: (state: boolean) => void;
-}
-
-export const ModalInitialValues: IModal = {
-  isVisible: false,
-  setIsVisible: () => {},
-};
-
-const ModalContext = createContext(ModalInitialValues);
 
 export function Modal({
   children,
   isVisible,
   setIsVisible,
   className,
-  animatedKey,
 }: {
   children: React.ReactNode;
   isVisible: boolean;
   setIsVisible: (state: boolean) => void;
   className?: string;
-  animatedKey: string;
 }) {
   useEffect(() => {
     if (isVisible) {
@@ -43,23 +28,23 @@ export function Modal({
   }, [isVisible]);
 
   return (
-    <ModalContext.Provider value={{ isVisible, setIsVisible }}>
+    <>
       {isVisible
         ? createPortal(
             <AnimatePresence mode="wait">
               <motion.div
-                key={animatedKey ?? "modal"}
-                className="bg-white/30 dark:bg-black/30 backdrop-blur-lg fixed inset-0 z-[2] grid place-items-center"
+                className="bg-white/30 dark:bg-black/30 backdrop-blur-lg fixed inset-0 z-[2] flex items-center justify-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setIsVisible(false)}
               >
                 <motion.section
-                  className={`w-fit p-4 m-4 z-[3] bg-base-100 rounded-2xl shadow-lg ${className}`}
+                  className={`w-fit p-4 bg-base-100 rounded-2xl shadow-lg ${className}`}
                   initial={{ scale: 1.1, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.9, opacity: 0 }}
+                  onClick={(e) => e.stopPropagation()}
                 >
                   {children}
                 </motion.section>
@@ -68,6 +53,6 @@ export function Modal({
             document.getElementById("portal") as Element,
           )
         : null}
-    </ModalContext.Provider>
+    </>
   );
 }

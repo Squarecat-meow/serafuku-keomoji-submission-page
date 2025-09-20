@@ -40,7 +40,6 @@ export default function GlobalModal() {
 }
 
 function ModalBody({ className }: { className?: string }) {
-  const router = useRouter();
   const modalTypeRef = useRef<string>(null);
   const { setIsModalVisible, children, modalType } = useGlobalModalStore(
     useShallow((state) => ({
@@ -66,7 +65,6 @@ function ModalBody({ className }: { className?: string }) {
 
   const handleInfoClick = () => {
     setIsModalVisible(false);
-    router.push("/main");
   };
 
   const handleErrorClick = () => {

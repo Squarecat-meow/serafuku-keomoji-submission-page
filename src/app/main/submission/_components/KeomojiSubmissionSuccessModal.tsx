@@ -1,6 +1,6 @@
 "use client";
 
-import { Modal } from "@/components/primitives/Modal";
+import { Modal } from "@/components/primitives/modal/Modal";
 
 export default function KeomojiSubmissionConfirmModal({
   isVisible,

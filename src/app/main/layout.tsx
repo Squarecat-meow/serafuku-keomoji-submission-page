@@ -1,6 +1,6 @@
 import AnimatePresenceWrapper from "@/components/animation/AnimatedPresenceWrapper";
 import GlobalLoading from "@/components/primitives/GlobalLoading";
-import GlobalModal from "@/components/primitives/GlobalModal";
+import GlobalModal from "@/components/primitives/modal/GlobalModal";
 import NavBar from "@/components/primitives/Navbar";
 import { cookies } from "next/headers";
 
