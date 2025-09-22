@@ -12,7 +12,7 @@ export default function Chip({ status }: { status: Submission["status"] }) {
     PENDING: "bg-warning text-warning-content",
   };
   return (
-    <div className={`px-2 py-1 rounded-xl text-xs ${classes[status]}`}>
+    <div className={`w-fit px-2 py-1 rounded-xl text-xs ${classes[status]}`}>
       {text[status]}
     </div>
   );
