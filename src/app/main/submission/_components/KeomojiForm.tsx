@@ -12,14 +12,13 @@ import {
   useGlobalModalStore,
 } from "@/stores/modalStore";
 import { useShallow } from "zustand/shallow";
-import { api } from "@/services/apiClient";
 import { submissionQueries } from "@/queries/submissionQueries";
 
 interface IKeomojiForm {
   aliases: string;
   name: string;
   category: string;
-  licenses: string[] | null;
+  licenses: string | null;
   isSensitive: boolean;
   isLocal: boolean;
 }
@@ -94,7 +93,6 @@ export default function KeomojiForm({
     try {
       setIsGlobalLoadingVisible(true);
       mutation.mutate(data);
-      // 여기부터 지우기
       setChildren(
         `커모지 제출이 완료되었습니다. \n승인까지는 시간이 걸리니까 조금만 기다려주세요!`,
       );
