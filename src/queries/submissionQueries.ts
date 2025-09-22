@@ -3,6 +3,7 @@ import {
   getMySingleSubmission,
   getMySubmissions,
   getPaginatedSubmissions,
+  patchSubmission,
   postSubmission,
 } from "@/services/submission";
 import { TGlobalModalType } from "@/types/modal/globalModalType";
@@ -51,6 +52,37 @@ export const mySubmissionQueries = {
     queryOptions({
       queryKey: [...mySubmissionQueries.mySingleSubmission()],
       queryFn: () => getMySingleSubmission(id),
+    }),
+  mySubmissionModifyMutationOptions: (
+    queryClient: QueryClient,
+    setModifyModalVisible: (state: boolean) => void,
+    setModalChildren: (children: string) => void,
+    setModalType: (type: TGlobalModalType) => void,
+    setGlobalModalVisible: (state: boolean) => void,
+    setLoading: (state: boolean) => void,
+  ) =>
+    mutationOptions({
+      mutationKey: [...mySubmissionQueries.mySubmission()],
+      mutationFn: async (data: FormData) => patchSubmission(data),
+      onMutate: () => {
+        setModifyModalVisible(false);
+        setLoading(true);
+      },
+      onSuccess: () => {
+        setLoading(false);
+        queryClient.invalidateQueries({
+          queryKey: [...mySubmissionQueries.mySubmission()],
+        });
+        setModalType("info");
+        setModalChildren("수정이 완료되었습니다!");
+        setGlobalModalVisible(true);
+      },
+      onError: () => {
+        setLoading(false);
+        setModalType("error");
+        setModalChildren("삭제중 에러가 발생했습니다!");
+        setGlobalModalVisible(true);
+      },
     }),
   mySubmissionDeleteMutationOptions: (
     id: number,

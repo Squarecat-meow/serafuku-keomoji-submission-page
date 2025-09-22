@@ -39,6 +39,19 @@ export async function postSubmission(data: FormData) {
   }
 }
 
+export async function patchSubmission(data: FormData) {
+  try {
+    const res = await api
+      .patch("/api/keomojis/my-submission", {
+        body: data,
+      })
+      .json();
+    return res;
+  } catch (err) {
+    throw err;
+  }
+}
+
 export async function getMySubmissions() {
   try {
     const res = await api.get("/api/keomojis/my-submission").json();

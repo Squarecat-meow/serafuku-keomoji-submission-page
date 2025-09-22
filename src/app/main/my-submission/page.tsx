@@ -8,10 +8,12 @@ import { useState } from "react";
 import MySubmissionDeleteModal from "./_components/MySubmissionDeleteModal";
 import { useKeomojiStore } from "@/stores/kemojiDetailStore";
 import Table from "./_components/MySubmissionTable";
+import MySubmissionModifyModal from "./_components/MySubmissionModifyModal";
 
 export default function MySubmissionCardArray() {
   const [isDetailVisible, setIsDetailVisible] = useState<boolean>(false);
   const [isDeleteVisible, setIsDeleteVisible] = useState<boolean>(false);
+  const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
   const selectedKeomoji = useKeomojiStore((state) => state.selectedKeomoji);
   const { data: mySubmissions, isLoading } = useQuery(
     mySubmissionQueries.mySubmissionOptions(),
@@ -23,6 +25,9 @@ export default function MySubmissionCardArray() {
   const handleToggleDeleteModal = (state: boolean) => {
     setIsDeleteVisible(state);
   };
+  const handleToggleModifyModal = (state: boolean) => {
+    setIsModifyVisible(state);
+  };
 
   return (
     <>
@@ -31,7 +36,11 @@ export default function MySubmissionCardArray() {
         {isLoading ? (
           <Loader2Icon className="animate-spin" />
         ) : (
-          <Table data={mySubmissions} onDeleteClick={handleToggleDeleteModal} />
+          <Table
+            data={mySubmissions}
+            onDeleteClick={handleToggleDeleteModal}
+            onModifyClick={handleToggleModifyModal}
+          />
         )}
       </section>
       {selectedKeomoji && (
@@ -47,6 +56,11 @@ export default function MySubmissionCardArray() {
             isVisible={isDeleteVisible}
             onDetailVisible={handleToggleDetailModal}
             onDeleteVisible={handleToggleDeleteModal}
+          />
+          <MySubmissionModifyModal
+            data={selectedKeomoji}
+            isVisible={isModifyVisible}
+            onModifyVisible={handleToggleModifyModal}
           />
         </>
       )}

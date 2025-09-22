@@ -8,13 +8,25 @@ import { motion } from "motion/react";
 export default function Table({
   data,
   onDeleteClick,
+  onModifyClick,
 }: {
   data: Submission[] | undefined;
   onDeleteClick: (state: boolean) => void;
+  onModifyClick: (state: boolean) => void;
 }) {
   const setSelectedKeomoji = useKeomojiStore(
     (state) => state.setSelectedKeomoji,
   );
+  const variants = {
+    rest: {
+      scale: 1,
+      rotateZ: 0,
+    },
+    hover: {
+      scale: 1.1,
+      rotateZ: 3,
+    },
+  };
   return (
     <table className="table">
       <thead>
@@ -31,16 +43,22 @@ export default function Table({
       </thead>
       <tbody>
         {data?.map((el, i) => (
-          <tr key={el.id}>
+          <motion.tr
+            key={el.id}
+            initial="rest"
+            whileHover="hover"
+            animate="rest"
+            className="transition-colors hover:bg-base-100"
+          >
             <th>{i + 1}</th>
-            <td>
+            <motion.td>
               <motion.img
                 src={el.url}
                 alt={el.name}
-                whileHover={{ scale: 1.1, rotateZ: 3 }}
+                variants={variants}
                 className="h-12 object-contain"
               />
-            </td>
+            </motion.td>
             <td>
               <div className="flex flex-col">
                 <span className="font-bold">:{el.name}:</span>
@@ -67,7 +85,15 @@ export default function Table({
             </td>
             <td>
               <div className="flex gap-2">
-                <button className="px-2 btn btn-sm">수정하기</button>
+                <button
+                  className="px-2 btn btn-sm"
+                  onClick={() => {
+                    setSelectedKeomoji(el);
+                    onModifyClick(true);
+                  }}
+                >
+                  수정하기
+                </button>
                 <button
                   className="px-2 btn btn-error btn-sm"
                   onClick={() => {
@@ -79,7 +105,7 @@ export default function Table({
                 </button>
               </div>
             </td>
-          </tr>
+          </motion.tr>
         ))}
       </tbody>
     </table>

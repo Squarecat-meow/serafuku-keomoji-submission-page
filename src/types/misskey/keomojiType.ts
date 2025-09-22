@@ -8,3 +8,7 @@ export interface IKeomoji {
   isSensitive: boolean;
   localOnly: boolean;
 }
+
+export interface IKeomojiModify extends IKeomoji {
+  id: number;
+}
