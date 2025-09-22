@@ -13,6 +13,8 @@ export function formDataParser<T extends Record<string, any>>( // eslint-disable
       continue;
     } else if (v === "true" || v === "false") {
       result[typedKey] = (v === "true") as T[keyof T];
+    } else if (k === "id") {
+      result[typedKey] = parseInt(v) as T[keyof T];
     } else {
       result[typedKey] = v.toString() as T[keyof T];
     }
