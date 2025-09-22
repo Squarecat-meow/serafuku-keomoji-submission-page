@@ -39,15 +39,18 @@ export default function GlobalModal() {
   );
 }
 
-function ModalBody({ className }: { className?: string }) {
+function ModalBody({ className }: { href?: string; className?: string }) {
+  const router = useRouter();
   const modalTypeRef = useRef<string>(null);
-  const { setIsModalVisible, children, modalType } = useGlobalModalStore(
-    useShallow((state) => ({
-      setIsModalVisible: state.setIsModalVisible,
-      children: state.children,
-      modalType: state.modalType,
-    })),
-  );
+  const { setIsModalVisible, children, modalType, modalHref } =
+    useGlobalModalStore(
+      useShallow((state) => ({
+        setIsModalVisible: state.setIsModalVisible,
+        children: state.children,
+        modalType: state.modalType,
+        modalHref: state.modalHref,
+      })),
+    );
 
   switch (modalType) {
     case "info":
@@ -65,6 +68,7 @@ function ModalBody({ className }: { className?: string }) {
 
   const handleInfoClick = () => {
     setIsModalVisible(false);
+    if (modalHref) router.push(modalHref);
   };
 
   const handleErrorClick = () => {

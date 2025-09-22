@@ -8,6 +8,8 @@ interface IGlobalModalStore {
   setChildren: (children: string) => void;
   modalType: TGlobalModalType;
   setModalType: (type: IGlobalModalStore["modalType"]) => void;
+  modalHref: string | null;
+  setModalHref: (href: string) => void;
 }
 
 interface IGlobalLoadingStore {
@@ -22,6 +24,8 @@ export const useGlobalModalStore = create<IGlobalModalStore>()((set) => ({
   setChildren: (children) => set({ children }),
   modalType: null,
   setModalType: (type) => set({ modalType: type }),
+  modalHref: null,
+  setModalHref: (href) => set({ modalHref: href }),
 }));
 
 export const useGlobalLoadingStore = create<IGlobalLoadingStore>()((set) => ({

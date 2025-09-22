@@ -3,6 +3,7 @@ import {
   getMySingleSubmission,
   getMySubmissions,
   getPaginatedSubmissions,
+  postSubmission,
 } from "@/services/submission";
 import { TGlobalModalType } from "@/types/modal/globalModalType";
 import { TStatusPayload } from "@/types/status/statusType";
@@ -13,17 +14,27 @@ import {
 } from "@tanstack/react-query";
 
 export const submissionQueries = {
-  submission: ({
+  submission: (page?: number, status?: TStatusPayload) => [
+    "submission",
     page,
     status,
-  }: {
-    page?: number;
-    status?: TStatusPayload;
-  }) => ["submission", { page, status }],
-  submissionOptions: (page: number, status: TStatusPayload) =>
+  ],
+  submissionOptions: (page: number, status: TStatusPayload | null) =>
     queryOptions({
-      queryKey: [...submissionQueries.submission({ page, status })],
+      queryKey: [...submissionQueries.submission(page, status)],
       queryFn: () => getPaginatedSubmissions(page, status),
+    }),
+  submissionMutationOptions: (queryClient: QueryClient) =>
+    mutationOptions({
+      mutationKey: [...submissionQueries.submission()],
+      mutationFn: async (data: FormData) => postSubmission(data),
+      onSuccess: () =>
+        queryClient.invalidateQueries({
+          queryKey: [
+            ...submissionQueries.submission(),
+            ...mySubmissionQueries.mySubmission(),
+          ],
+        }),
     }),
 };
 

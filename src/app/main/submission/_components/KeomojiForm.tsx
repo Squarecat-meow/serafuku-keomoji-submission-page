@@ -2,7 +2,7 @@
 
 import InputChip from "@/components/primitives/InputChip";
 import { misskeyQueries } from "@/queries/misskeyQueries";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { KeyboardEvent, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import KeomojiImageArray from "./KeomojiImageArray";
@@ -13,6 +13,7 @@ import {
 } from "@/stores/modalStore";
 import { useShallow } from "zustand/shallow";
 import { api } from "@/services/apiClient";
+import { submissionQueries } from "@/queries/submissionQueries";
 
 interface IKeomojiForm {
   aliases: string;
@@ -44,17 +45,22 @@ export default function KeomojiForm({
   });
   const [tags, setTags] = useState<{ name: string; id: number }[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const queryClient = useQueryClient();
   const { data: categories } = useQuery(misskeyQueries.categoriesOption());
-  const { setIsGlobalModalVisible, setChildren, setModalType } =
+  const { setIsGlobalModalVisible, setChildren, setModalType, setModalHref } =
     useGlobalModalStore(
       useShallow((state) => ({
         setIsGlobalModalVisible: state.setIsModalVisible,
         setChildren: state.setChildren,
         setModalType: state.setModalType,
+        setModalHref: state.setModalHref,
       })),
     );
   const setIsGlobalLoadingVisible = useGlobalLoadingStore(
     (state) => state.setIsLoadingVisible,
+  );
+  const mutation = useMutation(
+    submissionQueries.submissionMutationOptions(queryClient),
   );
 
   const handleKeydown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -87,13 +93,12 @@ export default function KeomojiForm({
 
     try {
       setIsGlobalLoadingVisible(true);
-      await api.post("/api/keomojis/submit", {
-        body: data,
-      });
-
+      mutation.mutate(data);
+      // 여기부터 지우기
       setChildren(
         `커모지 제출이 완료되었습니다. \n승인까지는 시간이 걸리니까 조금만 기다려주세요!`,
       );
+      setModalHref("/main");
       setModalType("info");
       setIsGlobalModalVisible(true);
     } catch (err) {

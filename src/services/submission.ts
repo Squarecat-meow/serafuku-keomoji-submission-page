@@ -28,6 +28,17 @@ export async function getPaginatedSubmissions(
   }
 }
 
+export async function postSubmission(data: FormData) {
+  try {
+    const res = await api.post("/api/keomojis/submit", {
+      body: data,
+    });
+    return res;
+  } catch (err) {
+    throw err;
+  }
+}
+
 export async function getMySubmissions() {
   try {
     const res = await api.get("/api/keomojis/my-submission").json();
