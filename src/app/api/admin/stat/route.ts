@@ -29,3 +29,24 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ message: err.message }, { status: 500 });
   }
 }
+
+export async function PATCH(req: NextRequest) {
+  try {
+    const data = (await req.json()) as {
+      id: number;
+      status: Submission["status"];
+    };
+    const res = await prisma.submission.update({
+      where: {
+        id: data.id,
+      },
+      data: {
+        status: data.status,
+      },
+    });
+    return NextResponse.json(res);
+  } catch (err) {
+    if (err instanceof Error)
+      return NextResponse.json({ message: err.message }, { status: 500 });
+  }
+}

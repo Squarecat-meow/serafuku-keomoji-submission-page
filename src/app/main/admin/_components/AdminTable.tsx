@@ -3,16 +3,24 @@
 import Chip from "@/components/primitives/Chip";
 import { adminQueries } from "@/queries/adminQueries";
 import { useAdminSidebarStore } from "@/stores/adminSidebarStore";
+import { useKeomojiStore } from "@/stores/kemojiDetailStore";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2Icon } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
 
-export default function AdminTable() {
+export default function AdminTable({
+  onModifyModalVisible,
+  onRejectModalVisible,
+  onAcceptModalVisible,
+}: {
+  onModifyModalVisible: (state: boolean) => void;
+  onRejectModalVisible: (state: boolean) => void;
+  onAcceptModalVisible: (state: boolean) => void;
+}) {
   const type = useAdminSidebarStore((state) => state.type);
-  const { data, isLoading } = useQuery(
-    adminQueries.sidebarSingleStatusOptions(type),
-  );
+  const setSelectedItem = useKeomojiStore((state) => state.setSelectedKeomoji);
+  const { data, isLoading } = useQuery(adminQueries.singleStatusOptions(type));
 
   const variants = {
     rest: {
@@ -99,9 +107,33 @@ export default function AdminTable() {
             </td>
             <td>
               <div className="flex gap-2">
-                <button className="px-2 btn btn-sm">수정</button>
-                <button className="px-2 btn btn-success btn-sm">승인</button>
-                <button className="px-2 btn btn-error btn-sm">반려</button>
+                <button
+                  className="px-2 btn btn-sm"
+                  onClick={() => {
+                    setSelectedItem(el);
+                    onModifyModalVisible(true);
+                  }}
+                >
+                  수정
+                </button>
+                <button
+                  className="px-2 btn btn-success btn-sm"
+                  onClick={() => {
+                    setSelectedItem(el);
+                    onAcceptModalVisible(true);
+                  }}
+                >
+                  승인
+                </button>
+                <button
+                  className="px-2 btn btn-error btn-sm"
+                  onClick={() => {
+                    setSelectedItem(el);
+                    onRejectModalVisible(true);
+                  }}
+                >
+                  반려
+                </button>
               </div>
             </td>
           </motion.tr>

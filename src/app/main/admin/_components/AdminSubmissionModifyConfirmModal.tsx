@@ -1,6 +1,6 @@
 import { Modal } from "@/components/primitives/modal/Modal";
 
-export default function MySubmissionModifyConfirmModal({
+export default function AdminSubmissionModifyConfirmModal({
   isVisible,
   setIsVisible,
   callback,

@@ -24,3 +24,35 @@ export async function getSubmissionInfo(status: Submission["status"]) {
     throw err;
   }
 }
+
+export async function patchAdminSubmission(data: FormData) {
+  try {
+    const res = await api
+      .patch("/api/admin/edit", {
+        body: data,
+      })
+      .json();
+    return res as Submission;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function patchAdminStatusChange(
+  id: number,
+  status: Submission["status"],
+) {
+  try {
+    const res = await api
+      .patch("/api/admin/stat", {
+        json: {
+          id,
+          status,
+        },
+      })
+      .json();
+    return res as Submission;
+  } catch (err) {
+    throw err;
+  }
+}
