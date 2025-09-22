@@ -1,6 +1,7 @@
 "use client";
 
 import { IUser } from "@/types/auth/authType";
+import Link from "next/link";
 
 export default function ProfileButton({ user }: { user: IUser }) {
   return (
@@ -27,6 +28,9 @@ export default function ProfileButton({ user }: { user: IUser }) {
         className="dropdown-content menu top-12 bg-base-200 rounded-box z-[1] w-52 p-2 shadow-lg"
       >
         <li>
+          {user.roles.some((el) => el.id === "9j73af19e2" || "9ypib6l198") && (
+            <Link href={"/main/admin"}>관리자 페이지</Link>
+          )}
           <a className="hover:bg-red-400">로그아웃</a>
         </li>
       </ul>
