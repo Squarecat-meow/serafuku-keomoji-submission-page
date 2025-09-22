@@ -1,6 +1,7 @@
 import KeomojiImageArray from "@/app/main/submission/_components/KeomojiImageArray";
 import { Submission } from "@/generated/prisma";
 import Image from "next/image";
+import * as motion from "motion/react-client";
 
 export default function ModalDetail({ data }: { data: Submission }) {
   return (
@@ -21,7 +22,13 @@ export default function ModalDetail({ data }: { data: Submission }) {
           </div>
           <div className="chat-bubble break-keep">
             커모지는{" "}
-            <img src={data.url} alt={data.name} className="h-6 inline-block" />{" "}
+            <motion.img
+              whileHover={{ scale: 1.2 }}
+              transition={{ type: "spring", bounce: 0.8 }}
+              src={data.url}
+              alt={data.name}
+              className="h-7 inline-block"
+            />{" "}
             이렇게 보여요!
           </div>
         </div>

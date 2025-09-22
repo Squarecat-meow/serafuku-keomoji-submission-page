@@ -2,17 +2,19 @@
 
 import InputChip from "@/components/primitives/InputChip";
 import { misskeyQueries } from "@/queries/misskeyQueries";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { KeyboardEvent, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import KeomojiImageArray from "./KeomojiImageArray";
-import KeomojiSubmissionConfirmModal from "./KeomojiSubmissionConfirmModal";
+import { submissionQueries } from "@/queries/submissionQueries";
 import {
   useGlobalLoadingStore,
   useGlobalModalStore,
 } from "@/stores/modalStore";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { motion } from "motion/react";
+import Image from "next/image";
+import { KeyboardEvent, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useShallow } from "zustand/shallow";
-import { submissionQueries } from "@/queries/submissionQueries";
+import KeomojiImageArray from "./KeomojiImageArray";
+import KeomojiSubmissionConfirmModal from "./KeomojiSubmissionConfirmModal";
 
 interface IKeomojiForm {
   aliases: string;
@@ -110,6 +112,29 @@ export default function KeomojiForm({
   return (
     <div className="w-full lg:max-w-3xl flex flex-col gap-4">
       <KeomojiImageArray imgUrl={imgUrl} />
+      <div className="chat chat-start">
+        <div className="chat-image avatar">
+          <div className="w-12 rounded-full">
+            <Image
+              src={"/images/mina.png"}
+              alt="미나 프로필 사진"
+              fill
+              className="rounded-full"
+            />
+          </div>
+        </div>
+        <div className="chat-bubble break-keep">
+          커모지는{" "}
+          <motion.img
+            whileHover={{ scale: 1.2 }}
+            transition={{ type: "spring", bounce: 0.8 }}
+            src={imgUrl}
+            alt="업로드한 커모지"
+            className="h-7 inline-block"
+          />{" "}
+          이렇게 보여요!
+        </div>
+      </div>
       <form
         className="grid grid-cols-1 sm:grid-cols-2 min-w-2xl gap-4"
         onSubmit={handleSubmit(onSubmit)}
