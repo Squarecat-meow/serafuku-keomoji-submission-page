@@ -1,9 +1,16 @@
 "use client";
 
+import { userQueries } from "@/queries/userQueries";
+import { useUserStore } from "@/stores/userStore";
 import { IUser } from "@/types/auth/authType";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function ProfileButton({ user }: { user: IUser }) {
+  const router = useRouter();
+  const mutation = useMutation(userQueries.userMutationOptions());
+  const setUser = useUserStore((state) => state.setUser);
   return (
     <div className="dropdown">
       <div className="btn btn-ghost px-2 font-light" tabIndex={0} role="button">
@@ -31,7 +38,16 @@ export default function ProfileButton({ user }: { user: IUser }) {
           {user.roles.some((el) => el.id === "9j73af19e2" || "9ypib6l198") && (
             <Link href={"/main/admin"}>관리자 페이지</Link>
           )}
-          <a className="hover:bg-red-400">로그아웃</a>
+          <a
+            className="hover:bg-red-400"
+            onClick={() => {
+              setUser(null);
+              mutation.mutate();
+              router.push("/");
+            }}
+          >
+            로그아웃
+          </a>
         </li>
       </ul>
     </div>

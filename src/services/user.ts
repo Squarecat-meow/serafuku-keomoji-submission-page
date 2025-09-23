@@ -1,4 +1,5 @@
 import { IUser } from "@/types/auth/authType";
+import { api } from "./apiClient";
 
 export async function getUserInfo(token: string) {
   try {
@@ -11,6 +12,15 @@ export async function getUserInfo(token: string) {
       body: JSON.stringify({}),
     });
     return (await res.json()) as IUser;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function postLogout() {
+  try {
+    const res = await api.post("/api/user/logout", { json: {} });
+    return res;
   } catch (err) {
     throw err;
   }
