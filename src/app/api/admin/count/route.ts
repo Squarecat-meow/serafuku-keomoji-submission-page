@@ -1,5 +1,13 @@
 import { prisma } from "@/lib/prismaClient";
 import { NextResponse } from "next/server";
+import { Submission } from "@prisma/client/index.js";
+
+interface ICountGroupBy {
+  status: Submission["status"];
+  _count: {
+    id: number;
+  };
+}
 
 export async function GET() {
   const count = await prisma.submission.groupBy({
@@ -10,7 +18,7 @@ export async function GET() {
   });
 
   const statusStats = count.reduce(
-    (acc, curr) => {
+    (acc: Record<string, number>, curr: ICountGroupBy) => {
       acc[curr.status] = curr._count.id;
       return acc;
     },
