@@ -31,6 +31,7 @@
 | BACKBLAZE_REGION           | Backblaze 버킷의 리전                                                  |
 | BACKBLAZE_APPLICAION_ID    | Backblaze 버킷의 KeyID                                                 |
 | BACKBLAZE_APPLICAION_KEY   | Backblaze 버킷의 ApplicationKey                                        |
+| JWT_SECRET_KEYS            | JWT를 서명하는 256bit의 비밀키                                         |
 
 미스키에서 지원하는 API를 사용해서 궁극적으로는 우리 사이트에서 커모지 신청부터 반려, 등록, 관리까지 원스톱으로 할 수 있도록 하는 거야. 그러니까 완성까지 지켜봐줘!
 
