@@ -15,15 +15,20 @@ import {
 } from "@tanstack/react-query";
 
 export const submissionQueries = {
-  submission: (page?: number, status?: TStatusPayload) => [
-    "submission",
-    page,
-    status,
-  ],
-  submissionOptions: (page: number, status: TStatusPayload | null) =>
+  submission: (
+    page?: number,
+    status?: TStatusPayload,
+    search?: string | null,
+  ) => ["submission", page, status, ...(search ? search : [])],
+  submissionOptions: (
+    page: number,
+    status: TStatusPayload | null,
+    search: string | null,
+  ) =>
     queryOptions({
-      queryKey: [...submissionQueries.submission(page, status)],
-      queryFn: () => getPaginatedSubmissions(page, status),
+      queryKey: [...submissionQueries.submission(page, status, search)],
+      queryFn: () =>
+        getPaginatedSubmissions(page, status, ...(search ? search : "")),
     }),
   submissionMutationOptions: (queryClient: QueryClient) =>
     mutationOptions({

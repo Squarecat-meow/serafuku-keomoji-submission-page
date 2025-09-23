@@ -47,7 +47,6 @@ export async function PATCH(req: NextRequest) {
     const accessToken = cookieStore.get("accessToken")!.value;
     const tokenVerify = await jwtVerify(accessToken, jwtSecret);
 
-    // TODO:인증로직 수정하기
     if (!tokenVerify)
       return NextResponse.json(
         { message: "JWT형식이 올바르지 않습니다!" },

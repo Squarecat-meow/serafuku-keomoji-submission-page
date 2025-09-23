@@ -1,7 +1,7 @@
 import StatusCardArray from "./_components/StatusCardArray";
 import SubmissionPagination from "./_components/SubmissionPagination";
-import { SearchIcon } from "lucide-react";
 import FilterForm from "./_components/FilterForm";
+import FilterSearch from "./_components/FilterSearch";
 
 export default async function Page() {
   return (
@@ -11,10 +11,7 @@ export default async function Page() {
         <h1 className="text-4xl font-bold">신청된 커모지 리스트</h1>
         <div className="min-w-fit flex items-center gap-2">
           <FilterForm />
-          <label className="input">
-            <SearchIcon size={16} />
-            <input type="search" placeholder="검색" />
-          </label>
+          <FilterSearch />
         </div>
       </div>
       <SubmissionPagination />

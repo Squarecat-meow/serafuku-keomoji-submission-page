@@ -12,6 +12,7 @@ interface IPaginatedSubmissionResponse {
 export async function getPaginatedSubmissions(
   page: number,
   status: TStatusPayload,
+  search?: string,
 ) {
   try {
     const res = await api
@@ -19,6 +20,7 @@ export async function getPaginatedSubmissions(
         searchParams: {
           page,
           ...(status ? { status } : {}),
+          ...(search ? { search } : {}),
         },
       })
       .json();

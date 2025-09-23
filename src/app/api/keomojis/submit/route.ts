@@ -82,6 +82,7 @@ export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const pageParam = searchParams.get("page");
   const statusParam = searchParams.get("status") as Status;
+  const searchParam = searchParams.get("search");
   const pageSize = 12;
 
   if ((!pageParam || !statusParam) && !pageParam)
@@ -94,6 +95,7 @@ export async function GET(req: NextRequest) {
   const skip = (page - 1) * pageSize;
   const results = await prisma.submission.findMany({
     ...(statusParam ? { where: { status: statusParam } } : {}),
+    ...(searchParam ? { where: { name: { contains: searchParam } } } : {}),
     orderBy: {
       createdAt: "desc",
     },

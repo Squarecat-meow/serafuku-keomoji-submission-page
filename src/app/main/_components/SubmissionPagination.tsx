@@ -7,12 +7,14 @@ import SubmissionCardArray from "./SubmissionCardArray";
 import { Loader2Icon } from "lucide-react";
 import { useFilterStore } from "@/stores/filterStore";
 import Image from "next/image";
+import { useSearchStore } from "@/stores/searchStore";
 
 export default function SubmissionPagination() {
   const [page, setPage] = useState(1);
   const statusValue = useFilterStore((state) => state.value);
+  const searchValue = useSearchStore((state) => state.search);
   const { data, isLoading } = useQuery(
-    submissionQueries.submissionOptions(page, statusValue),
+    submissionQueries.submissionOptions(page, statusValue, searchValue),
   );
   const pageList =
     data &&
