@@ -60,7 +60,7 @@ export default function AdminTable({
           <th>라이선스</th>
           <th>비고</th>
           <th>상태</th>
-          <th>관리</th>
+          {type === "PENDING" && <th>관리</th>}
         </tr>
       </thead>
       <tbody>
@@ -105,37 +105,39 @@ export default function AdminTable({
             <td className="w-fit">
               <Chip status={el.status} />
             </td>
-            <td>
-              <div className="flex gap-2">
-                <button
-                  className="px-2 btn btn-sm"
-                  onClick={() => {
-                    setSelectedItem(el);
-                    onModifyModalVisible(true);
-                  }}
-                >
-                  수정
-                </button>
-                <button
-                  className="px-2 btn btn-success btn-sm"
-                  onClick={() => {
-                    setSelectedItem(el);
-                    onAcceptModalVisible(true);
-                  }}
-                >
-                  승인
-                </button>
-                <button
-                  className="px-2 btn btn-error btn-sm"
-                  onClick={() => {
-                    setSelectedItem(el);
-                    onRejectModalVisible(true);
-                  }}
-                >
-                  반려
-                </button>
-              </div>
-            </td>
+            {type === "PENDING" && (
+              <td>
+                <div className="flex gap-2">
+                  <button
+                    className="px-2 btn btn-sm"
+                    onClick={() => {
+                      setSelectedItem(el);
+                      onModifyModalVisible(true);
+                    }}
+                  >
+                    수정
+                  </button>
+                  <button
+                    className="px-2 btn btn-success btn-sm"
+                    onClick={() => {
+                      setSelectedItem(el);
+                      onAcceptModalVisible(true);
+                    }}
+                  >
+                    승인
+                  </button>
+                  <button
+                    className="px-2 btn btn-error btn-sm"
+                    onClick={() => {
+                      setSelectedItem(el);
+                      onRejectModalVisible(true);
+                    }}
+                  >
+                    반려
+                  </button>
+                </div>
+              </td>
+            )}
           </motion.tr>
         ))}
       </tbody>

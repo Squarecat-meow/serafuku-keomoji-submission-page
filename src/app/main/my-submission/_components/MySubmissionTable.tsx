@@ -50,8 +50,8 @@ export default function Table({
             animate="rest"
             className="transition-colors hover:bg-base-100"
           >
-            <th>{i + 1}</th>
-            <motion.td>
+            <th className="max-w-fit">{i + 1}</th>
+            <motion.td className="max-w-fit">
               <motion.img
                 src={el.url}
                 alt={el.name}
@@ -76,35 +76,39 @@ export default function Table({
               ))}
             </td>
             <td>{el.licenses ? el.licenses : "없음"}</td>
-            <td className="flex flex-col">
+            <td className="max-w-fit flex flex-col">
               <span>로컬전용: {el.isLocal ? "⭕" : "❌"}</span>
               <span>민감한 커모지: {el.isSensitive ? "⭕" : "❌"}</span>
             </td>
-            <td className="w-fit">
+            <td className="max-w-fit">
               <Chip status={el.status} />
             </td>
-            <td>
-              <div className="flex gap-2">
-                <button
-                  className="px-2 btn btn-sm"
-                  onClick={() => {
-                    setSelectedKeomoji(el);
-                    onModifyClick(true);
-                  }}
-                >
-                  수정하기
-                </button>
-                <button
-                  className="px-2 btn btn-error btn-sm"
-                  onClick={() => {
-                    setSelectedKeomoji(el);
-                    onDeleteClick(true);
-                  }}
-                >
-                  삭제하기
-                </button>
-              </div>
-            </td>
+            {el.status === "PENDING" ? (
+              <td className="max-w-fit">
+                <div className="flex gap-2">
+                  <button
+                    className="px-2 btn btn-sm"
+                    onClick={() => {
+                      setSelectedKeomoji(el);
+                      onModifyClick(true);
+                    }}
+                  >
+                    수정하기
+                  </button>
+                  <button
+                    className="px-2 btn btn-error btn-sm"
+                    onClick={() => {
+                      setSelectedKeomoji(el);
+                      onDeleteClick(true);
+                    }}
+                  >
+                    삭제하기
+                  </button>
+                </div>
+              </td>
+            ) : (
+              <td></td>
+            )}
           </motion.tr>
         ))}
       </tbody>
