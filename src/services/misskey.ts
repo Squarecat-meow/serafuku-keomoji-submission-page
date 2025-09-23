@@ -1,5 +1,5 @@
 import { api } from "./apiClient";
-import { Category } from "@/generated/prisma";
+import { Category } from "@prisma/client/index.js";
 
 export async function getCategories() {
   const categories = await api

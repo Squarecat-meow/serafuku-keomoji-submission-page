@@ -1,6 +1,6 @@
 import InputChip from "@/components/primitives/InputChip";
 import { Modal } from "@/components/primitives/modal/Modal";
-import { Submission } from "@/generated/prisma";
+import { Submission } from "@prisma/client/index.js";
 import { misskeyQueries } from "@/queries/misskeyQueries";
 import {
   useGlobalLoadingStore,

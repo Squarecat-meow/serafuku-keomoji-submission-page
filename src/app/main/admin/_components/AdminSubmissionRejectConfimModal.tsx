@@ -1,7 +1,7 @@
 "use client";
 
 import { Modal } from "@/components/primitives/modal/Modal";
-import { Submission } from "@/generated/prisma";
+import { Submission } from "@prisma/client/index.js";
 import { adminQueries } from "@/queries/adminQueries";
 import { useAdminSidebarStore } from "@/stores/adminSidebarStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

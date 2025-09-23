@@ -1,7 +1,7 @@
 "use client";
 
 import Chip from "@/components/primitives/Chip";
-import { Submission } from "@/generated/prisma";
+import { Submission } from "@prisma/client/index.js";
 import { useKeomojiStore } from "@/stores/kemojiDetailStore";
 import { motion } from "motion/react";
 

@@ -1,4 +1,4 @@
-import { Submission } from "@/generated/prisma";
+import { Submission } from "@prisma/client/index.js";
 import { api } from "./apiClient";
 
 export async function getSidebarCount() {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Submission } from "@/generated/prisma";
+import { Submission } from "@prisma/client/index.js";
 import { Modal } from "@/components/primitives/modal/Modal";
 import ModalDetail from "@/components/primitives/modal/ModalDetail";
 

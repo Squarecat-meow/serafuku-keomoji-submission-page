@@ -1,5 +1,5 @@
 import KeomojiImageArray from "@/app/main/submission/_components/KeomojiImageArray";
-import { Submission } from "@/generated/prisma";
+import { Submission } from "@prisma/client/index.js";
 import Image from "next/image";
 import * as motion from "motion/react-client";
 

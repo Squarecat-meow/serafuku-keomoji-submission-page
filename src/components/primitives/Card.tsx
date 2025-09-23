@@ -1,6 +1,6 @@
 import { CheckCircle, ClockIcon, FileUpIcon, XCircleIcon } from "lucide-react";
 import Badge from "./Badge";
-import { Submission } from "@/generated/prisma";
+import { Submission } from "@prisma/client/index.js";
 
 interface ICard {
   status: Submission["status"] | "TOTAL";

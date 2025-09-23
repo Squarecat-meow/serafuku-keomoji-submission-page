@@ -1,5 +1,5 @@
 import { formDataParser } from "@/functions/formDataParser";
-import { Status } from "@/generated/prisma";
+import { Status } from "@prisma/client/index.js";
 import { jwtSecret } from "@/lib/jwt";
 import { prisma } from "@/lib/prismaClient";
 import { uploadFile } from "@/lib/s3";

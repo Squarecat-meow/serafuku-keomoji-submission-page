@@ -1,6 +1,6 @@
 "use client";
 
-import { Submission } from "@/generated/prisma";
+import { Submission } from "@prisma/client/index.js";
 import SubmissionCard from "./SubmissionCard";
 import { useState } from "react";
 import { useKeomojiStore } from "@/stores/kemojiDetailStore";

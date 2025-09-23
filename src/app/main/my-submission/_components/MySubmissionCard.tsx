@@ -1,17 +1,11 @@
 "use client";
 
 import Chip from "@/components/primitives/Chip";
-import { Submission } from "@/generated/prisma";
+import { Submission } from "@prisma/client/index.js";
 import { useKeomojiStore } from "@/stores/kemojiDetailStore";
 import { motion } from "motion/react";
 
-export default function MySubmissionCard({
-  data,
-  onImageClick,
-}: {
-  data: Submission;
-  onImageClick: (state: boolean) => void;
-}) {
+export default function MySubmissionCard({ data }: { data: Submission }) {
   const setSelectedKeomoji = useKeomojiStore(
     (state) => state.setSelectedKeomoji,
   );
@@ -21,7 +15,6 @@ export default function MySubmissionCard({
         className="w-1/3 aspect-square m-auto"
         onClick={() => {
           setSelectedKeomoji(data);
-          onImageClick(true);
         }}
       >
         <motion.img

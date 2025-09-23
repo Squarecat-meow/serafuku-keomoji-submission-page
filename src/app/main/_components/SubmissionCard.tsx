@@ -1,5 +1,5 @@
 import Chip from "@/components/primitives/Chip";
-import { Submission } from "@/generated/prisma";
+import { Submission } from "@prisma/client/index.js";
 import * as motion from "motion/react-client";
 
 export default function SubmissionCard({

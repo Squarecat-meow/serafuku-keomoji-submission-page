@@ -1,6 +1,6 @@
 import { TStatusPayload } from "@/types/status/statusType";
 import { api } from "./apiClient";
-import { Submission } from "@/generated/prisma";
+import { Submission } from "@prisma/client/index.js";
 
 interface IPaginatedSubmissionResponse {
   results: Submission[];
