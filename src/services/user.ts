@@ -2,6 +2,7 @@ import { IUser } from "@/types/auth/authType";
 import { api } from "./apiClient";
 
 export async function getUserInfo(token: string) {
+  // TODO: Tanstack Query로 바꾸기
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_API_URL}/i`, {
       method: "POST",
